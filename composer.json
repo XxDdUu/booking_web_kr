@@ -1,5 +1,5 @@
 {
-    "name": "pyme/phpmyapp",
+    "name": "nextme/phpmyapp",
     "description": "test == >",
     "license": "proprietary",
     "version": "1.0.0",
@@ -20,7 +20,8 @@
     },
     "require-dev": {
         "laravel/breeze": "^2.3",
-        "laravel/tinker": "^2.10"
+        "laravel/tinker": "^2.10",
+        "laravel/sail": "^1.46"
     }
     
 }
