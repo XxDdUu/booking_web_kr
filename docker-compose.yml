@@ -1,7 +1,5 @@
-version: "3.9"
-
 services:
-  backend:
+  backend: 
     build:
       context: ./
       dockerfile: Dockerfile
@@ -41,7 +39,7 @@ services:
     container_name: laravel-webserver
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8000:80"
       - "443:443"
     volumes:
       - ./:/var/www/html
