@@ -16,7 +16,8 @@
     "minimum-stability": "stable",
     "require": {
         "laravel/framework": "^12.29",
-        "inertiajs/inertia-laravel": "^2.0"
+        "inertiajs/inertia-laravel": "^2.0",
+        "laravel/socialite": "^5.23"
     },
     "require-dev": {
         "laravel/breeze": "^2.3",
