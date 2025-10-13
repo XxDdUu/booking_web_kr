@@ -7,45 +7,39 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Route
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * Show the login page.
-     */
-    public function create(Request $request): Response
+    public function store(Request $request)
     {
-        return Inertia::render('auth/login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => $request->session()->get('status'),
-        ]);
+        $credentials = $request->only(['email', 'phone', 'password']);
+
+        $field = isset($credentials['email']) ? 'email' : 'phone';
+
+        if (!Auth::attempt([$field => $credentials[$field]
+        , 'password' => $credentials['password']]
+        , $request->boolean('remember'))) {
+            throw ValidationException::withMessages([
+                'message' => ['The provided credentials do not match our records.'],
+            ]);
+        }
+        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'The provided credentials do not match our records.',
+            'token' => $token,
+            'user' => $user,
+        ], 422);
     }
-
-    /**
-     * Handle an incoming authentication request.
-     */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
-
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        $request->user()->currentAccessToken()->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
     }
 }

@@ -1,14 +1,12 @@
-version: "3.9"
-
 services:
-  backend:
+  backend: 
     build:
       context: ./
       dockerfile: Dockerfile
     container_name: booking_web
     restart: unless-stopped
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
     environment:
       APP_ENV: production
       APP_KEY: base64:3h1Nos0AP45NvlBXscwd/FPCzqrmhJekdSYZJN1uSfk=
@@ -41,7 +39,7 @@ services:
     container_name: laravel-webserver
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8000:80"
       - "443:443"
     volumes:
       - ./:/var/www/html
