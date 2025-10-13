@@ -17,7 +17,8 @@
     "require": {
         "laravel/framework": "^12.29",
         "inertiajs/inertia-laravel": "^2.0",
-        "laravel/socialite": "^5.23"
+        "laravel/socialite": "^5.23",
+        "laravel/jetstream": "^5.3"
     },
     "require-dev": {
         "laravel/breeze": "^2.3",

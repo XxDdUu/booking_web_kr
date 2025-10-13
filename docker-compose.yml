@@ -6,7 +6,7 @@ services:
     container_name: booking_web
     restart: unless-stopped
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
     environment:
       APP_ENV: production
       APP_KEY: base64:3h1Nos0AP45NvlBXscwd/FPCzqrmhJekdSYZJN1uSfk=

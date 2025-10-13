@@ -13,16 +13,25 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->string('UserID', 255)->primary();
-            $table->string('Name',255)->nullable(false);
-            $table->string('Email',255)->unique();
-            $table->string('Phone',255)->unique();
-            # google auth
-            $table->string('google_id', 255)->nullable(false)->unique();
-            $table->string('avatar_url',255)->nullable(false)->unique();
-            $table->string('provider',50)-> nullable(false)->unique();
+            $table->string('Name',255)->nullable(); // allow null for optional name
+            $table->string('Email',255)->unique()->nullable(false);
+            $table->string('Phone',255)->unique()->nullable(false);
+            $table->string('Language',10)->nullable(false)->default('en');
+            $table->string('avatar_url',255)->nullable()->unique(); // make nullable
+            // google auth
+            $table->string('google_id', 255)->nullable()->unique();
+            $table->string('google_avatar_url',255)->nullable()->unique();
+            $table->string('provider',50)->nullable()->unique();
             /****   ***/
             $table->string('Password', 255)->nullable(false);
+            $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -31,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('password_reset_tokens'); // ensure this is dropped
         Schema::dropIfExists('users');
     }
 };
