@@ -3,23 +3,23 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Laravel\Jetstream\Jetstream;
+use Laravel\Jetstream\Jetstream; 
 
-class AppServiceProvider extends ServiceProvider
-{
+class JetstreamOverrideServiceProvider extends ServiceProvider
+{       
     /**
-     * Register any application services.
+     * Register services.
      */
     public function register(): void
-    {   
-
+    {
+        //
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap services.
      */
     public function boot(): void
     {
-        //
+        
     }
 }
