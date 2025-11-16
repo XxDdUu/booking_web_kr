@@ -9,8 +9,16 @@ services:
       - ./:/var/www
     env_file:
       - .env
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      AWS_BUCKET: ${AWS_BUCKET}
+      AWS_URL: ${AWS_URL}
     depends_on:
       - db
+    networks:
+      - booking-network
 
   db:
     image: mysql:8.0
@@ -23,6 +31,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      - booking-network
 
   webserver:
     image: nginx:alpine
@@ -32,10 +42,12 @@ services:
       - "8000:80"
       - "443:443"
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - backend
+    networks:
+      - booking-network
 volumes:
   dbdata:
 networks:

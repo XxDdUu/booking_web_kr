@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Filesystem\Filesystem;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -16,7 +18,8 @@ Route::get('/test_s3', function ()  {
     try {
         $path = 'test_s3_' .time(). '.txt';
         Storage::disk('s3')->put($path, 'This is a test file');
-        return 'S3 Test: File uploaded successfully {$path}';
+        $url = Storage::disk('s3')->url($path);
+        return "S3 Test: File uploaded successfully <br>URL: <a href='{$url}' target='_blank'>{$url}</a>";;
     } catch (Exception $e) {
         return 'S3 Test: Error - ' . $e->getMessage();
     }
