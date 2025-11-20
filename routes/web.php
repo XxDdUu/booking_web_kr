@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Filesystem\Filesystem;
 
 Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
-
+        return response()->json([
+        'message' => 'Laravel API running',
+        'status' => 'OK' 
+    ]);
+});
 Route::get('/verify-email', EmailVerificationPromptController::class)
     ->middleware(['auth'])
     ->name('verification.notice');
@@ -23,12 +24,6 @@ Route::get('/test_s3', function ()  {
     } catch (Exception $e) {
         return 'S3 Test: Error - ' . $e->getMessage();
     }
-});
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
 });
 
 require __DIR__.'/settings.php';

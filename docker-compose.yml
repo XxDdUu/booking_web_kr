@@ -19,7 +19,8 @@ services:
       - db
     networks:
       - booking-network
-
+    expose:
+      - "9000"
   db:
     image: mysql:8.0
     container_name: booking-db
