@@ -7,21 +7,20 @@ services:
     restart: unless-stopped
     volumes:
       - ./:/var/www
+    env_file:
+      - .env
     environment:
-      APP_ENV: production
-      APP_KEY: base64:3h1Nos0AP45NvlBXscwd/FPCzqrmhJekdSYZJN1uSfk=
-      APP_DEBUG: false
-      APP_URL: https://api.sky-enterprise.id.vn
-
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: booking_web_db
-      DB_USERNAME: laravel
-      DB_PASSWORD: secret
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      AWS_BUCKET: ${AWS_BUCKET}
+      AWS_URL: ${AWS_URL}
     depends_on:
       - db
-
+    networks:
+      - booking-network
+    expose:
+      - "9000"
   db:
     image: mysql:8.0
     container_name: booking-db
@@ -33,6 +32,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      - booking-network
 
   webserver:
     image: nginx:alpine
@@ -42,14 +43,14 @@ services:
       - "8000:80"
       - "443:443"
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www
       - ./nginx/conf.d:/etc/nginx/conf.d
     depends_on:
       - backend
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    networks:
+      - booking-network
 volumes:
   dbdata:
+networks:
+  booking-network:
+    driver: bridge
