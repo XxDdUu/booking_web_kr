@@ -21,7 +21,10 @@ return [
 
     // 'allowed_origins' => ['http://sky-enterprise.id.vn/'],
 
-    'allowed_origins' => ['http://localhost:3000'],
+    'allowed_origins' => [
+        'https://sky-enterprise.id.vn',  // origin frontend production
+        'http://localhost:3000',         // origin frontend dev
+    ],
 
     'allowed_origins_patterns' => [],
 

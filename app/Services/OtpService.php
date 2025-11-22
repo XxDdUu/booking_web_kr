@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\OtpRepository;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\OtpMail;
 
 class OtpService
 {
@@ -24,13 +25,10 @@ class OtpService
     public function sendOtp(string $contact, int $otp): void
     {
         if (filter_var($contact, FILTER_VALIDATE_EMAIL)) {
-            Mail::raw("Your OTP is: {$otp}", function ($m) use ($contact) {
-                $m->to($contact)->subject("Your OTP Code");
-            });
+            Mail::to($contact)->send(new OtpMail($otp));
         }
 
-        // SMS provider (tùy bạn)
-        // Ví dụ:
+        // SMS provider
         // SmsService::send($contact, "Your OTP is: $otp");
     }
 

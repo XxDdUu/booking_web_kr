@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Laravel\Sanctum\HasApiTokens;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,7 +36,7 @@ class AuthenticatedSessionController extends Controller
             'user' => $user,
         ], 422);
     }
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
 
