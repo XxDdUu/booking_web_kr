@@ -19,10 +19,6 @@ return new class extends Migration
             $table->string('Language',10)->nullable(false)->default('en');
             $table->string('avatar_url',255)->nullable()->unique(); // make nullable
             $table->string('role', 50)->nullable(false)->default('customer')->check('staff', 'customer', 'admin');
-            // google auth
-            $table->string('google_id', 255)->nullable()->unique();
-            $table->string('google_avatar_url',255)->nullable()->unique();
-            $table->string('provider',50)->nullable()->unique();
             /****   ***/
             $table->string('Password', 255)->nullable(false);
             $table->rememberToken();
