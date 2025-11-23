@@ -13,8 +13,22 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->string('booking_id')->primary();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('user_id');
+            // 2. Định nghĩa khoá ngoại
+            $table->foreign('user_id')
+                ->references('id') // Tên cột khoá chính bên bảng users (thường là id hoặc user_id)
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            // Tương tự cho services
+            $table->string('service_id');
+            $table->foreign('service_id')
+                ->references('service_id') // Tên cột khoá chính bên bảng services
+                ->on('services')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             // $table->string('status', 50)->default('pending')->check('confirmed', 'cancelled', 'confirmed modified', 'pending');
             $table->string('status', 50)->default('pending')->comment('confirmed, cancelled, confirmed modified, pending');
             $table->timestamps();
