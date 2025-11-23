@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking', function (Blueprint $table) {
-            $table->id();
-            $table->foriegnId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->string('status', 50)->default('pending')->check('confirmed', 'cancelled', 'confirmed modified', 'pending');
+        Schema::create('bookings', function (Blueprint $table) {
+            $table->string('booking_id')->primary();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('service_id')->constrained('services')->onDelete('cascade')->onUpdate('cascade');
+            // $table->string('status', 50)->default('pending')->check('confirmed', 'cancelled', 'confirmed modified', 'pending');
+            $table->string('status', 50)->default('pending')->comment('confirmed, cancelled, confirmed modified, pending');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('table_booking');
+        Schema::dropIfExists('bookings');
     }
 };
