@@ -16,7 +16,7 @@ class OtpMail extends Mailable
         $this->otp = $otp;
     }
     public function build() {
-        return $this->from('no-reply@sky_link.com', 'Sky Link')
+        return $this->from('no-reply@sky-link.com', 'Sky Link')
             ->subject('Your OTP Code')
             ->view('emails.otp');
     }

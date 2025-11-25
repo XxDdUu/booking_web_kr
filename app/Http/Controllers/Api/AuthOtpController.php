@@ -21,7 +21,7 @@ class AuthOtpController extends Controller
         ]);
 
         $otp = $this->otpService->generateOtp($request->contact);
-        $this->otpService->sendOtp($request->contact, $otp);
+        $this->otpService->sendOtp(contact: $request->contact, $otp);
 
         return response()->json([
             'success' => true,

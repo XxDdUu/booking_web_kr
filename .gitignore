@@ -10,8 +10,7 @@
 /storage/*.key
 /storage/pail
 /vendor
-/nginx/certs/privkey.pem
-/nginx/certs/fullchain.pem
+/nginx/certs/
 .env
 .env.backup
 .env.production
