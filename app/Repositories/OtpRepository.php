@@ -6,20 +6,25 @@ use Illuminate\Support\Facades\Cache;
 
 class OtpRepository
 {
-    protected int $ttl = 300; // 5 phút (300s)
-
-    public function store(string $contact, int $otp): void
+    public function store(string $contact, string $otp): void
     {
-        Cache::put("otp_{$contact}", $otp, now()->addSeconds($this->ttl));
+        Cache::put("otp:$contact", $otp, now()->addMinutes(3));
+        Cache::put("otp_verified:$contact", false, ttl: now()->addMinutes(10));
     }
 
-    public function get(string $contact): ?int
+    public function get(string $contact): ?string
     {
-        return Cache::get("otp_{$contact}");
+        return Cache::get("otp:$contact");
     }
 
-    public function delete(string $contact): void
+    public function markVerified(string $contact): void
     {
-        Cache::forget("otp_{$contact}");
+        Cache::put("otp_verified:$contact", true, now()->addMinutes(10));
+        Cache::forget("otp:$contact");
+    }
+
+    public function isVerified(string $contact): bool
+    {
+        return Cache::get("otp_verified:$contact") === true;
     }
 }

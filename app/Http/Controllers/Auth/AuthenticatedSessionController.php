@@ -16,26 +16,13 @@ class AuthenticatedSessionController extends Controller
 {
     public function store(Request $request)
     {
-        $credentials = $request->only(['email', 'phone', 'password']);
-
-        $field = isset($credentials['email']) ? 'email' : 'phone';
-
-        if (!Auth::attempt([$field => $credentials[$field]
-        , 'password' => $credentials['password']]
-        , $request->boolean('remember'))) {
-            throw ValidationException::withMessages([
-                'message' => ['The provided credentials do not match our records.'],
-            ]);
-        }
-        $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'The provided credentials do not match our records.',
-            'token' => $token,
-            'user' => $user,
-        ], 422);
-    }
+    $request->validate([
+        'password' => 'required|string',
+        'email' => 'required_without:phone|email',
+        'phone' => 'required_without:email|string',
+        'remember' => 'boolean'
+    ]);
+}
     public function destroy(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
