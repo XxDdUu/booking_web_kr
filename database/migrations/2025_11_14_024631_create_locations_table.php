@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             // $table->id();
-            $table->string('location_id',255)->primary();
-            $table->string('name',255);
-            $table->string('adress',255);
-            $table->string('city',128);
-            $table->string('country',128);
-            $table->string('pinCode',255);
+            $table->string('LocationID',255)->primary();
+            $table->string('LocationName',255);
+            $table->string('Address',255);
+            $table->string('Country',128);
+            $table->string('PinCode',255);
+            $table->text('Image');
             $table->timestamps();
         });
     }

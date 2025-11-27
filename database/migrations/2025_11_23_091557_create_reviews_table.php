@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             // $table->id();
-            $table->string('review_id',255)->primary();
+            $table->string('ReviewID',255)->primary();
 
-            $table->string('location_id',255);
-            $table->foreign('location_id')
-                ->references('location_id')
+            $table->string('LocationID',255);
+            $table->foreign('LocationID')
+                ->references('LocationID')
                 ->on('locations')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->string('service_id',255);
-            $table->foreign('service_id')
-                ->references('service_id')
+            $table->string('ServiceID',255);
+            $table->foreign('ServiceID')
+                ->references('ServiceID')
                 ->on('services')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');

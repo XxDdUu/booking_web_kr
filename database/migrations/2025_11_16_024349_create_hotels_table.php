@@ -11,28 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hotels', function (Blueprint $table) {
+        Schema::create('stays', function (Blueprint $table) {
             // $table->id();
-            $table->string('hotel_id', 255)->primary();
-            // 1. Xử lý location_id
-            $table->string('location_id'); // Tạo cột string thay vì bigInteger
-            $table->foreign('location_id')
-                ->references('location_id')       // Tên cột khóa chính bên bảng locations
+            $table->string('HotelID', 255)->primary();
+            // 1. Xử lý locationID
+            $table->string('LocationID'); // Tạo cột string thay vì bigInteger
+            $table->foreign('LocationID')
+                ->references('LocationID')       // Tên cột khóa chính bên bảng locations
                 ->on('locations')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // 2. Xử lý category_id
-            $table->string('category_id'); // Tạo cột string thay vì bigInteger
-            $table->foreign('category_id')
-                ->references('category_id')       // Tên cột khóa chính bên bảng hotel_categories
+            // 2. Xử lý categoryID
+            $table->string('CategoryID'); // Tạo cột string thay vì bigInteger
+            $table->foreign('CategoryID')
+                ->references('CategoryID')       // Tên cột khóa chính bên bảng hotel_categories
                 ->on('categories')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             
-            $table->string('hotel_name', 128);
-            $table->text('description');
-            $table->text('city');
+            $table->string('HotelName', 128);
+            $table->text('Description');
+            $table->string('Location',128);
+            $table->date('checkIn');
+            $table->date('checkOut');
+            $table->text('Image');
             $table->timestamps();
         });
     }
