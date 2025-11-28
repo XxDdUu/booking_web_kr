@@ -50,12 +50,12 @@ class OtpRegisterService
     }
     public function registerUser(string $contact, ?string $name, string $password)
     {
-        if (!$this->otpRepo->isVerified($contact)) {
-            return [
-                'success' => false,
-                'message' => 'OTP not verified'
-            ];
-        }
+        // if (!$this->otpRepo->isVerified($contact)) {
+        //     return [
+        //         'success' => false,
+        //         'message' => 'OTP not verified'
+        //     ];
+        // }
 
         $data = [
             'password' => Hash::make($password),
