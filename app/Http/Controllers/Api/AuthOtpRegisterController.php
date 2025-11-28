@@ -16,34 +16,20 @@ class AuthOtpRegisterController extends Controller
 
     public function sendOtp(Request $request)
     {
-        // $request->validate([
-        //     'contact' => 'required|string',
-        // ]);
+        $request->validate([
+            'contact' => 'required|string',
+        ]);
 
-        // $otp = $this->otpRegisterService->generateOtp($request->contact);
-        // $this->otpRegisterService->sendOtp(
-        //     contact: $request->contact, 
-        //     otp: $otp
-        // );
+        $otp = $this->otpRegisterService->generateOtp($request->contact);
+        $this->otpRegisterService->sendOtp(
+            contact: $request->contact, 
+            otp: $otp
+        );
 
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'OTP sent',
-        // ]);
-    try {
-        $contact = $request->input('contact');
-        if (!$contact) {
-            return response()->json(['success'=>false,'message'=>'contact is required'], 400);
-        }
-
-        $otp = $this->otpRegisterService->generateOtp($contact);
-        $this->otpRegisterService->sendOtp(contact: $contact, otp: $otp);
-
-        return response()->json(['success'=>true,'message'=>'OTP sent']);
-    } catch (\Throwable $e) {
-        \Log::error('SEND OTP ERROR', ['message'=>$e->getMessage(), 'trace'=>$e->getTraceAsString()]);
-        return response()->json(['success'=>false,'message'=>'Internal error','error'=>$e->getMessage()], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP sent',
+        ]);
     }
 
     public function verifyOtp(Request $request)
