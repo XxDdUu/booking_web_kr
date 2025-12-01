@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('email',255)->unique()->nullable();
             $table->string('phone',255)->unique()->nullable();
             $table->string('language',10)->nullable(false)->default('en');
-            $table->string('avatar_url',255)->nullable()->unique(); // make nullable
-            $table->string('role', 50)->nullable(false)->default('customer')->check('staff', 'customer', 'admin');
+            $table->string('avatar_url',255)->nullable();
+            $table->string('role', 50)
+            ->default('customer')
+            ->check("role IN ('staff', 'customer', 'admin')");
             /****   ***/
             $table->string('password', 255)->nullable(false);
             $table->rememberToken();
