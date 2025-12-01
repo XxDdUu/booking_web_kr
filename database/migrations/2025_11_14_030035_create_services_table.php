@@ -12,18 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->string('ServiceID', 255)->primary();
-
-            $table->string('LocationID'); // Tạo cột string thay vì bigInteger
-            $table->foreign('LocationID')
-                ->references('LocationID')       // Tên cột khóa chính bên bảng locations
-                ->on('locations')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->string('Name', 255);
-            $table->text('Description');
-            $table->decimal('Price', 10, 2)->default(0);
+            $table->string('serviceID', 255)->primary();
+            $table->string('serviceType', 255);
             $table->timestamps();
         });
     }
