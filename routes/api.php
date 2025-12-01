@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Api\AuthCheckController;
 use App\Http\Controllers\Api\AuthOtpRegisterController;
 use App\Http\Controllers\Api\AuthUserController;

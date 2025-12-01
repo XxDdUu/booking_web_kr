@@ -22,7 +22,7 @@ return new class extends Migration
             ->default('customer')
             ->check("role IN ('staff', 'customer', 'admin')");
             /****   ***/
-            $table->string('Password', 255)->nullable(false);
+            $table->string('password', 255)->nullable(false);
             $table->rememberToken();
             $table->timestamps();
         });

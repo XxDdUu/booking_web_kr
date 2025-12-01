@@ -12,19 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->string('booking_id')->primary();
-            $table->string('user_id');
+            $table->string('bookingID')->primary();
+            $table->string('userID');
             // 2. Định nghĩa khoá ngoại
-            $table->foreign('user_id')
+            $table->foreign('userID')
                 ->references('id') // Tên cột khoá chính bên bảng users (thường là id hoặc user_id)
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
             // Tương tự cho services
-            $table->string('service_id');
-            $table->foreign('service_id')
-                ->references('service_id') // Tên cột khoá chính bên bảng services
+            $table->string('serviceID');
+            $table->foreign('serviceID')
+                ->references('serviceID') // Tên cột khoá chính bên bảng services
                 ->on('services')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
