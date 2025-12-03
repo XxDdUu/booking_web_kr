@@ -6,6 +6,7 @@ use App\Repositories\OtpRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Mail\OtpMail;
 
 class OtpRegisterService
@@ -48,14 +49,14 @@ class OtpRegisterService
 
         return true;
     }
-    public function registerUser(string $contact, ?string $name, string $password)
+    public function registerUser(string $contact, ?string $name, string $password, bool $keepLoggedIn = false)
     {
-        // if (!$this->otpRepo->isVerified($contact)) {
-        //     return [
-        //         'success' => false,
-        //         'message' => 'OTP not verified'
-        //     ];
-        // }
+        if (!$this->otpRepo->isVerified($contact)) {
+            return [    
+                'success' => false,
+                'message' => 'OTP not verified'
+            ];
+        }
 
         $data = [
             'password' => Hash::make($password),
@@ -73,6 +74,18 @@ class OtpRegisterService
         }
 
         $user = $this->userRepo->createUser($data);
+
+        if ($keepLoggedIn) {
+            $plainToken = Str::random(60);
+            $user->remember_token = hash('sha256', $plainToken);
+            $user->save();
+            return [
+                'success' => true,
+                'message' => 'Registered successfully',
+                'user' => $user,
+                'remember_token' => $plainToken,
+            ];
+        }
 
         return [
             'success' => true,

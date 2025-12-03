@@ -72,11 +72,13 @@ class AuthOtpRegisterController extends Controller
         ],
 
         'password' => ['required', 'string', 'min:8'],
+        'keepLoggedIn' => ['nullable', 'boolean'],
         ]);
         return $this->otpRegisterService->registerUser(
             $contact,
             $request->name,
-            $request->password
+            $request->password,
+            $request->keepLoggedIn
     );
     }
 }
