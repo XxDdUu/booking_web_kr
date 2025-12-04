@@ -10,4 +10,15 @@ class UserRepository
     {
         return User::create($data);
     }
+    public function updateAvatarUrl(User $user, string $avatarPath): User
+    {
+        $user->avatar_url = $avatarPath;
+        $user->save();
+        return $user;
+    }
+    public function update(User $user, array $data): User
+    {
+        $user->update($data);
+        return $user;
+    }
 }
