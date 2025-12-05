@@ -13,7 +13,7 @@ class FileService
 
     public function uploadImage(UploadedFile $file, string $folder = 'uploads')
     {
-        $diskName = env('FILESYSTEM_DRIVER', 'public');
+        $diskName = config('filesystems.default');
 
         $path = $this->repo->store($file, $folder);
 

@@ -8,7 +8,7 @@ class FileRepository
 {
     public function store($file, string $folder): string
     {
-        $disk = env('FILESYSTEM_DRIVER', 'public');
+        $disk = config('filesystems.default');
 
         // Ensure folder exists
         $storagePath = ($disk === 'public') ? $folder : $folder;
@@ -23,7 +23,8 @@ class FileRepository
 
         $filename = time() . '_' . $originalName;
 
-        return $file->storeAs($storagePath, $filename, $disk);
+        return Storage::disk($disk)
+        ->putFileAs($folder, $file, $filename);
     }
 
 
