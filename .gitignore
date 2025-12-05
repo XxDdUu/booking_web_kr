@@ -10,6 +10,7 @@
 /storage/*.key
 /storage/pail
 /vendor
+/nginx/certs/
 .env
 .env.backup
 .env.production
