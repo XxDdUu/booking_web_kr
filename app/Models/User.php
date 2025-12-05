@@ -6,12 +6,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public $table = 'users';
+    public $incrementing = false;
+    protected $keyType = 'string';
     /**
      * The attributes that are mass assignable.
      *
@@ -23,7 +27,10 @@ class User extends Authenticatable
         'phone',
         'language',
         'password',
+        'avatar_path',
     ];
+    protected $appends = ['avatar_url'];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -33,6 +40,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+
     ];
 
     /**
@@ -47,4 +55,35 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    protected static function boot(): void {
+        parent::boot();
+
+        static::creating(function ($user){
+            if (empty($user->id)) {
+                $prefix = match($user->provider ?? $user->role ?? 'customer') {
+                    'staff' => 'STAFF',
+                    'admin' => 'ADMIN',
+                    default => 'BKGCUS',
+                };
+                $user->id = self::generateCustomerID($prefix);
+            };
+        });
+    }
+    protected static function generateCustomerID(string $prefix) : string {
+        return sprintf(
+            '%s-%02d-%02d-%04d',
+            $prefix,
+            random_int(10, 99),
+            random_int(10, 99),
+            random_int(1000, 9999)
+        );
+    }
+    public function getAvatarUrlAttribute()
+    {
+        return $this->avatar_path
+            ? Storage::url($this->avatar_path)
+            : null;
+    }
+
+
 }

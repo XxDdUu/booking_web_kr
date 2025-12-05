@@ -7,21 +7,25 @@ use App\Models\User;
 use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
-class RegisterUserController extends Controller
+use Illuminate\Validation\Rule;
+class RegisteredUserController extends Controller
 {
-    public function store(RegisterRequest $request)
-    {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'language' => $request->language,
-            'password' => Hash::make($request->password),
+    public function store(RegisterRequest $request){
+        $validated = $request->validated([
+            'name' => ['string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'required_without:phone'],
+            'phone' => ['required', 'string', 'max:255', 'unique:users', 'required_without:email'],
+            'password' => ['required', 'confirmed', Rule\Password::default()],
         ]);
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'] ?? null,
+            'phone' => $validated['phone'] ?? null,
+            'password' => Hash::make($validated['password']),
+        ]);
+        event(new Registered($user));
 
-        return response()->json([
-            'message' => 'User registered successfully', 
-            'user' => $user], 201);
+        Auth::login($user);
+        return redirect(RouteServiceProvider::HOME);
     }
 }

@@ -7,21 +7,14 @@ services:
     restart: unless-stopped
     volumes:
       - ./:/var/www
-    environment:
-      APP_ENV: production
-      APP_KEY: base64:3h1Nos0AP45NvlBXscwd/FPCzqrmhJekdSYZJN1uSfk=
-      APP_DEBUG: false
-      APP_URL: https://api.sky-enterprise.id.vn
-
-      DB_CONNECTION: mysql
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: booking_web_db
-      DB_USERNAME: laravel
-      DB_PASSWORD: secret
+    env_file:
+      - .env
     depends_on:
       - db
-
+    networks:
+      - booking-network
+    expose:
+      - "9000"
   db:
     image: mysql:8.0
     container_name: booking-db
@@ -33,23 +26,30 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      - booking-network
 
   webserver:
     image: nginx:alpine
     container_name: laravel-webserver
     restart: unless-stopped
     ports:
-      - "8000:80"
+      - "8000:80" # dev local
+      - "80:80" # production
       - "443:443"
     volumes:
-      - ./:/var/www/html
-      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./:/var/www
+      #- ./nginx/certs:/etc/nginx/certs
+      - ./nginx/conf.d/local.conf:/etc/nginx/conf.d/default.conf
+      # - ./nginx/conf.d/prod.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt/live/api.sky-enterprise.id.vn/fullchain.pem:/etc/nginx/certs/fullchain.pem
+      - /etc/letsencrypt/live/api.sky-enterprise.id.vn/privkey.pem:/etc/nginx/certs/privkey.pem
     depends_on:
       - backend
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    networks:
+      - booking-network
 volumes:
   dbdata:
+networks:
+  booking-network:
+    driver: bridge
