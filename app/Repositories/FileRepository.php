@@ -27,9 +27,13 @@ class FileRepository
     }
 
 
-    public function delete($path)
+    public function delete(?string $path)
     {
-        return Storage::delete($path);
+        if (!$path) return;
+
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+        }
     }
 
     public function get($path)

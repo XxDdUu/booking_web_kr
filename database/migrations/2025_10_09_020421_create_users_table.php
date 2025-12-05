@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email',255)->unique()->nullable();
             $table->string('phone',255)->unique()->nullable();
             $table->string('language',10)->nullable(false)->default('en');
-            $table->string('avatar_url',255)->nullable();
+            $table->string('avatar_path',255)->nullable();
             $table->string('role', 50)
             ->default('customer')
             ->check("role IN ('staff', 'customer', 'admin')");
