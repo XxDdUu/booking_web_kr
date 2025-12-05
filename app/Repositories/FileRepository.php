@@ -8,23 +8,25 @@ class FileRepository
 {
     public function store($file, string $folder): string
     {
+        
         $disk = config('filesystems.default');
 
-        // Ensure folder exists
-        $storagePath = ($disk === 'public') ? $folder : $folder;
-
-        if (!\Storage::disk($disk)->exists($storagePath)) {
-        \Storage::disk($disk)->makeDirectory($storagePath);
-        }
-
+        // Tạo tên file
         $originalName = method_exists($file, 'getClientOriginalName')
             ? $file->getClientOriginalName()
             : ($file->originalName ?? 'file');
 
         $filename = time() . '_' . $originalName;
 
-        return Storage::disk($disk)
-        ->putFileAs($folder, $file, $filename);
+        // Đường dẫn lưu
+        $path = rtrim($folder, '/') . '/' . $filename;
+
+        Storage::disk($disk)->put(
+            $path,
+            file_get_contents($file)
+        );
+
+        return $path;
     }
 
 
