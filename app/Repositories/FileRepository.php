@@ -10,21 +10,20 @@ class FileRepository
     {
         $disk = config('filesystems.default');
 
-        // Ensure folder exists
-        $storagePath = ($disk === 'public') ? $folder : $folder;
-
-        if (!\Storage::disk($disk)->exists($storagePath)) {
-        \Storage::disk($disk)->makeDirectory($storagePath);
-        }
-
         $originalName = method_exists($file, 'getClientOriginalName')
             ? $file->getClientOriginalName()
             : ($file->originalName ?? 'file');
 
         $filename = time() . '_' . $originalName;
 
-        return Storage::disk($disk)
-        ->putFileAs($folder, $file, $filename);
+        $path = rtrim($folder, '/') . '/' . $filename;
+
+        Storage::disk($disk)->put(
+            $path,
+            file_get_contents($file)
+        );
+        
+        return $path;
     }
 
 

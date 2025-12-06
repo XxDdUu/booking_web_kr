@@ -16,10 +16,13 @@ class FileController extends Controller
     }
     public function upload(Request $request)
     {   
+        Log::info('Uploading image via API');
+        Log::info('Request data: ', $request->all());
+        Log::info('Has file: ', ['hasFile' => $request->hasFile('image')]);
+        Log::info('Files:', $request->files->all());
         $request->validate([
             'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
         ]);
-
         $file = $request->file('image');
         // store file under /storage/app/public/uploads
         $fileData = $this->fileService->uploadImage($file);
