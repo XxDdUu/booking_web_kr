@@ -19,7 +19,6 @@ class FileController extends Controller
         $request->validate([
             'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
         ]);
-
         $file = $request->file('image');
         // store file under /storage/app/public/uploads
         $fileData = $this->fileService->uploadImage($file);
