@@ -10,7 +10,6 @@ class FileRepository
     {
         $disk = config('filesystems.default');
 
-        // Lấy tên gốc
         $originalName = method_exists($file, 'getClientOriginalName')
             ? $file->getClientOriginalName()
             : ($file->originalName ?? 'file');
@@ -19,23 +18,13 @@ class FileRepository
         $ext = $file->getClientOriginalExtension();
         $filename = time() . '_' . uniqid() . '.' . $ext;
 
-        // Đường dẫn lưu
         $path = rtrim($folder, '/') . '/' . $filename;
 
-        // Upload (KHÔNG ACL)
-        try {
-            Storage::disk($disk)->put(
-                $path,
-                file_get_contents($file->getRealPath())
-            );
-        } catch (\Throwable $e) {
-            dd([
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-        }
-
-
+        Storage::disk($disk)->put(
+            $path,
+            file_get_contents($file)
+        );
+        
         return $path;
     }
 

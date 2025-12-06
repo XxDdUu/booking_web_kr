@@ -15,11 +15,10 @@ class FileController extends Controller
         $this->fileService = $fileService;
     }
     public function upload(Request $request)
-    {
-        Log::info('controller-hit');
-        // $request->validate([
-        //     'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
-        // ]);
+    {   
+        $request->validate([
+            'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
+        ]);
         $file = $request->file('image');
         // store file under /storage/app/public/uploads
         $fileData = $this->fileService->uploadImage($file);
