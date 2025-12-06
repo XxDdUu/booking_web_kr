@@ -16,7 +16,7 @@ Route::post('/auth/register', [AuthOtpRegisterController::class, 'register']);
 
 Route::get('/auth/me', [AuthUserController::class, 'me']);
 Route::patch('/user/avatar', [UserController::class, 'updateAvatarUrl']);
-
+Route::post('/auth/logout', [AuthUserController::class, 'logout']);
 
 
 Route::post('/upload', action: [FileController::class, 'upload']);
