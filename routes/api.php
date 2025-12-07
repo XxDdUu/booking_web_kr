@@ -16,11 +16,11 @@ Route::post('/auth/register', [AuthOtpRegisterController::class, 'register']);
 
 Route::get('/auth/me', [AuthUserController::class, 'me']);
 Route::patch('/user/avatar', [UserController::class, 'updateAvatarUrl']);
-
+Route::post('/auth/logout', [AuthUserController::class, 'logout']);
 
 
 Route::post('/upload', action: [FileController::class, 'upload']);
 Route::get('/image/{filename}', [FileController::class, 'get']);
 Route::get('/stays/keysearch',[LocationKeywordsController::class,'getKeywords']);
-Route::get('/stays/staysResults',[StaysResultsController::class,'searchingResult']);
+Route::get('/stays/search',[StaysResultsController::class,'searchingResult']);
 Route::get('/stays/all',[StaysResultsController::class,'getAllResults']);
