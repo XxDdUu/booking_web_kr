@@ -1,30 +1,44 @@
 <?php
 
 namespace App\Services;
-
+use Illuminate\Support\Facades\Log;
 use App\Repositories\AuthRepository;
-
+use App\Services\TokenService;
 class AuthService
 {
     protected $repo;
+    protected TokenService $tokenService;
 
-    public function __construct(AuthRepository $repo)
+    public function __construct(AuthRepository $repo, TokenService $tokenService)
     {
         $this->repo = $repo;
+        $this->tokenService = $tokenService;
     }
-
-    public function extractToken($header): ?string
+    public function loginUser($credentials, bool $keepLoggedIn = false)
     {
-        if (!$header) return null;
-        return str_replace("Bearer ", "", $header);
-    }
+        $user = $this->repo->authenticate($credentials);
+        if (!$user) return null;
 
-    public function getUserFromToken(?string $token)
-    {
-        if (!$token) return null;
+        $token = null;
 
-        $hashed = hash('sha256', $token);
-        return $this->repo->findUserByToken($hashed);
+        if ($keepLoggedIn) {
+            $token = $this->tokenService->createRememberToken($user);
+            
+            return [
+                'success' => true,
+                'user' => $user,
+                'token' => $token,
+                'type' => 'remember'
+            ];  
+        }
+        $token = $this->tokenService->createTemporaryToken($user);
+
+        return [
+            'success' => true,
+            'user' => $user,
+            'message' => 'Login successful',
+            'token' => $token
+        ];
     }
 
     public function logoutUser($user): void
