@@ -13,7 +13,11 @@ class CategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['hotel','resort','villa','apartment','motel','hostel'];
+        $categories = [
+            'hotel','resort','villa','apartment','motel','hostel',
+            'tour','bảo tàng','hoạt động ngoài trời','thưởng thức & giải trí',
+            'lớp học & workshop',
+        ];
         foreach($categories as $cate){
             Category::create(['categoryName'=>$cate]);
         };
