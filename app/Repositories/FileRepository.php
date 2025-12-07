@@ -1,29 +1,31 @@
 <?php
 
 namespace App\Repositories;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 class FileRepository
 {
     public function store($file, string $folder): string
     {
-        $disk = env('FILESYSTEM_DRIVER', 'public');
-
-        // Ensure folder exists
-        $storagePath = ($disk === 'public') ? $folder : $folder;
-
-        if (!\Storage::disk($disk)->exists($storagePath)) {
-        \Storage::disk($disk)->makeDirectory($storagePath);
-        }
+        $disk = config('filesystems.default');
 
         $originalName = method_exists($file, 'getClientOriginalName')
             ? $file->getClientOriginalName()
             : ($file->originalName ?? 'file');
 
-        $filename = time() . '_' . $originalName;
+        // Tạo tên file an toàn
+        $ext = $file->getClientOriginalExtension();
+        $filename = time() . '_' . uniqid() . '.' . $ext;
 
-        return $file->storeAs($storagePath, $filename, $disk);
+        $path = rtrim($folder, '/') . '/' . $filename;
+
+        Storage::disk($disk)->put(
+            $path,
+            file_get_contents($file)
+        );
+        
+        return $path;
     }
 
 
