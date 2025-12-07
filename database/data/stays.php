@@ -25,10 +25,10 @@ return [
         'rating'     => 4.9,
     ],
     [
-        'stayName'   => 'Monaco Hotel Da Nang',
+        'stayName'   => 'Monalisa Luxury Hotel Da Nang',
         'location'   => 'Đà Nẵng',
-        'address'    => '97-99 Duong Dinh Nghe, An Hai, Da Nang',
-        'image'      => 'https://th.bing.com/th/id/R.102644a9d897e34d7648b61caed9fa71?rik=myKPuKNPDr%2bXBA&pid=ImgRaw&r=0',
+        'address'    => '198 Tran Bach Dang St, Ngu Hanh Son Ward, Da Nang',
+        'image'      => 'https://eng.monalisaluxuryhotel.com/uploads/product/q6nnxb4e-1455-ho-boi.jpg',
         'price'      => 999000,
         'rating'     => 4.9
     ],
@@ -36,7 +36,7 @@ return [
         'stayName'   => 'DLG Hotel Danang',
         'location'   => 'Đà Nẵng',
         'address'    => '258 Vo Nguyen Giap St, Ngu Hanh Son Ward, Da Nang',
-        'image'      => 'https://th.bing.com/th/id/R.102644a9d897e34d7648b61caed9fa71?rik=myKPuKNPDr%2bXBA&pid=ImgRaw&r=0',
+        'image'      => 'https://media.mia.vn/uploads/blog-du-lich/dlg-hotel-danang-khach-san-5-sao-thanh-lich-sang-trong-va-cao-cap-01-1653437999.jpg',
         'price'      => 999000,
         'rating'     => 4.9
     ],
