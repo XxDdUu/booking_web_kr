@@ -23,5 +23,5 @@ Route::post('/auth/login', [AuthUserController::class, 'login']);
 Route::post('/upload', action: [FileController::class, 'upload']);
 Route::get('/image/{filename}', [FileController::class, 'get']);
 Route::get('/stays/keysearch',[LocationKeywordsController::class,'getKeywords']);
-Route::get('/stays/staysResults',[StaysResultsController::class,'searchingResult']);
+Route::get('/stays/search',[StaysResultsController::class,'searchingResult']);
 Route::get('/stays/all',[StaysResultsController::class,'getAllResults']);
