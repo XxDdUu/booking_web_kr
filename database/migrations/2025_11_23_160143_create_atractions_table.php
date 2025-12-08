@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('serviceID',255);
             $table->string('locationID',255);
             $table->string('categoryID',255);
-            $table->string('atractionName',255);
+            $table->string('attractionName',255);
             $table->text('description')->nullable();
             $table->string('specificType',255);
             $table->string('category',255);

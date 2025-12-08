@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Api\AttractionsResultsController;
 use App\Http\Controllers\Api\AuthCheckController;
 use App\Http\Controllers\Api\AuthOtpRegisterController;
 use App\Http\Controllers\Api\AuthUserController;
@@ -25,3 +27,4 @@ Route::get('/image/{filename}', [FileController::class, 'get']);
 Route::get('/stays/keysearch',[LocationKeywordsController::class,'getKeywords']);
 Route::get('/stays/search',[StaysResultsController::class,'searchingResult']);
 Route::get('/stays/all',[StaysResultsController::class,'getAllResults']);
+Route::get('/attractions/search',[AttractionsResultsController::class,'searchAtt']);

@@ -1,7 +1,7 @@
 <?php
 return [
     [
-        'atractionName'   => 'Thả lồng đèn trên sông ban đêm Hội An',
+        'attractionName'   => 'Thả lồng đèn trên sông ban đêm Hội An',
         'specificType'   => 'Lễ hội lồng đèn',
         'category'      => 'tour',
         'duration'     => '45 phút - 1 tiếng',
@@ -10,7 +10,7 @@ return [
         'rate'     => 4.9,
     ],
     [
-        'atractionName'   => 'Lướt ván trên biển Mỹ Khê',
+        'attractionName'   => 'Lướt ván trên biển Mỹ Khê',
         'specificType'   => 'Thể thao ngoài trời',
         'category'      => 'hoạt động ngoài trời',
         'duration'     => '45 phút - 1 tiếng',
@@ -19,7 +19,7 @@ return [
         'rate'     => 4.9,
     ],
     [
-        'atractionName'   => 'Di tích khu K20',
+        'attractionName'   => 'Di tích khu K20',
         'specificType'   => 'Di tích lịch sử',
         'category'      => 'bảo tàng',
         'duration'     => '45 phút - 1 tiếng',
@@ -28,7 +28,7 @@ return [
         'rate'     => 4.9,
     ],
     [
-        'atractionName'   => 'Áo Dài Show Đà Nẵng',
+        'attractionName'   => 'Áo Dài Show Đà Nẵng',
         'specificType'   => 'Chương trình biểu diễn',
         'category'      => 'show',
         'duration'     => '45 phút - 1 tiếng',
@@ -37,7 +37,7 @@ return [
         'rate'     => 4.9
     ],
     [
-        'atractionName'   => 'Lớp nấu món ăn VN tại Đà Nẵng',
+        'attractionName'   => 'Lớp nấu món ăn VN tại Đà Nẵng',
         'specificType'   => 'Lớp kĩ năng',
         'category'     => 'lớp học',
         'duration'     => '45 phút - 1 tiếng',
