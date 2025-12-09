@@ -24,7 +24,7 @@ class AuthUserController extends Controller
     {
         $header = $request->header('Authorization');
         $token = $this->tokenService->extractToken($header);
-
+        
         $user = $this->tokenService->getUserFromToken($token);
 
         if (!$user) {

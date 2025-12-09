@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\Services\TokenService;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
@@ -11,10 +12,13 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     protected $service;
+    protected $tokenService;
 
-    public function __construct(UserService $service)
+    public function __construct(UserService $service, TokenService $tokenService)
     {
         $this->service = $service;
+        $this->tokenService = $tokenService;
+        
     }
 
     public function updateAvatarUrl(Request $request)
@@ -22,7 +26,9 @@ class UserController extends Controller
         $data = $request->validate([
             'avatar_path' => 'required|string'
         ]);
-        $user = $this->getUserFromToken($request);
+        $token = $this->tokenService->extractToken($request->header('Authorization'));
+        $user = $this->tokenService->getUserFromToken($token);
+        
         if (!$user) {
             return response()->json(['message' => 'Unauthorized'], 401);
         };
@@ -33,17 +39,6 @@ class UserController extends Controller
             'message' => 'Avatar updated successfully',
             'user' => $updated
         ]);
-    }
-    private function getUserFromToken(Request $request)
-    {
-        $auth = $request->header('Authorization');
-
-        if (!$auth) return null;
-
-        $token = str_replace('Bearer ', '', $auth);
-        $hashed = hash('sha256', $token);
-
-        return User::where('remember_token', $hashed)->first();
     }
 
 }
