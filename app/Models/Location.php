@@ -24,11 +24,11 @@ class Location extends Model
         parent::boot();
         static::creating(function ($location) {
             if (empty($location->locationID)) {
-                $location->locationID = self::generateStayID('LOC');
+                $location->locationID = self::generateLocationID('LOC');
             };
         });
     }
-    public static function generateStayID(string $prefix): string
+    public static function generateLocationID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',

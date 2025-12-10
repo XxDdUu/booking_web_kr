@@ -17,8 +17,6 @@ class Stay extends Model
         'categoryID',
         'serviceID',
         'stayName',
-        // 'checkIn',
-        // 'checkOut',
         'description',
         'location',
         'rate', 

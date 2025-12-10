@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class StaysResultsController extends Controller
 {
-    public function searchingResult(Request $request)
+    public function searchingResults(Request $request)
     {
         try {
             $loc      = $request->query('location');

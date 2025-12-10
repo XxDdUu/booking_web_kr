@@ -27,11 +27,11 @@ class Attraction extends Model
         parent::boot();
         static::creating(function ($attraction) {
             if (empty($attraction->attractionID)) {
-                $attraction->attractionID = self::generateStayID('ATT');
+                $attraction->attractionID = self::generateAttractionID('ATT');
             };
         });
     }
-    public static function generateStayID(string $prefix): string
+    public static function generateAttractionID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',
