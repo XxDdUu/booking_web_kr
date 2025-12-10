@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\LocationKeywordsController;
 use App\Http\Controllers\Api\StaysResultsController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\Admin\LocationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/check_email', [AuthCheckController::class, 'checkEmail']);
@@ -28,3 +29,8 @@ Route::get('/stays/keysearch',[LocationKeywordsController::class,'getKeywords'])
 Route::get('/stays/search',[StaysResultsController::class,'searchingResult']);
 Route::get('/stays/all',[StaysResultsController::class,'getAllResults']);
 Route::get('/attractions/search',[AttractionsResultsController::class,'searchAtt']);
+
+Route::post('/admin/locations', [LocationController::class, 'store']);
+Route::put('/admin/locations/{id}', [LocationController::class, 'put']);
+Route::get('/admin/locations', [LocationController::class, 'index']);
+
