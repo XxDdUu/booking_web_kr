@@ -48,11 +48,11 @@ services:
       - "443:443"
     volumes:
       - ./:/var/www
-      #- ./nginx/certs:/etc/nginx/certs
+      - ./nginx/certs:/etc/nginx/certs
       - ./nginx/conf.d/local.conf:/etc/nginx/conf.d/default.conf
       # - ./nginx/conf.d/prod.conf:/etc/nginx/conf.d/default.conf
-      - /etc/letsencrypt/live/api.sky-enterprise.id.vn/fullchain.pem:/etc/nginx/certs/fullchain.pem
-      - /etc/letsencrypt/live/api.sky-enterprise.id.vn/privkey.pem:/etc/nginx/certs/privkey.pem
+      # - /etc/letsencrypt/live/api.sky-enterprise.id.vn/fullchain.pem:/etc/nginx/certs/fullchain.pem
+      # - /etc/letsencrypt/live/api.sky-enterprise.id.vn/privkey.pem:/etc/nginx/certs/privkey.pem
     depends_on:
       - backend
     networks:
