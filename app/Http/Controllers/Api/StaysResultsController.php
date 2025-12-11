@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class StaysResultsController extends Controller
 {
-    public function searchingResult(Request $request)
+    public function searchingResults(Request $request)
     {
         try {
             $loc      = $request->query('location');
@@ -34,13 +34,13 @@ class StaysResultsController extends Controller
             $stays = DB::table('stays')
                 ->select('stayID', 'stayName', 'location', 'address', 'rating', 'price', 'image')
                 ->whereRaw('location LIKE BINARY ?', ["%$loc%"])
-                ->get();
-                // ->map(function ($stay) {
-                //     // Ép kiểu về dạng number đúng chuẩn
-                //     $stay->rating = (float) $stay->rating;
-                //     $stay->price = (float) $stay->price;
-                //     return $stay;
-                // });
+                ->get()
+                ->map(function ($stay) {
+                    // Ép kiểu về dạng number đúng chuẩn
+                    $stay->rating = (float) $stay->rating;
+                    $stay->price = (float) $stay->price;
+                    return $stay;
+                });
 
             // Nếu có check-in và check-out thì tính days + totalPrice
             if ($checkIn && $checkOut) {

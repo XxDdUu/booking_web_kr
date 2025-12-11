@@ -21,16 +21,36 @@ class LocationKeywordsController extends Controller
                 return response()->json([]);
             }
 
-            $keywords = DB::table('locations')
-                ->whereRaw("locationName LIKE BINARY ?", ["%$q%"])
-                ->pluck('locationName');
-            Log::info('SQL executed', ['keywords' => $keywords]);
+            // $keywords = DB::table('locations')
+            //     ->whereRaw("locationName LIKE BINARY ?", ["%$q%"])
+            //     ->pluck('locationName');
+            $mock = [
+                'Đà Nẵng',
+                'Nha Trang',
+                'Hà Nội',
+                'Sapa',
+                'Cần Thơ',
+                ' Huế',
+                'TP. Hồ Chí Minh',
+                'Ninh Bình',
+                'Quy Nhơn',
+                'Vũng Tàu',
+                'Hội An',
+                'Hạ Long Bay',
+                'Phú Quốc',
+                'Đà Lạt',
+                'Hà Giang'
+            ];
+            // Lọc keyword theo q
+            $keywords = array_values(array_filter($mock, function ($mock) use ($q) {
+                return mb_stripos($mock, $q) !== false; // Không phân biệt hoa/thường
+            }));
+            Log::info('SQL executed', ['keywords' => $mock]);
             Log::info("Received q:", [$request->q]);
 
             return response()->json([
                 'q' => $q,
-                'keywords' => $keywords,
-                'table' => (new Location)->getTable(),
+                'keywords' => $keywords
             ]);
         } catch (\Exception $e) {
             // debug

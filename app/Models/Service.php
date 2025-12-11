@@ -19,11 +19,11 @@ class Service extends Model
         parent::boot();
         static::creating(function ($service) {
             if (empty($service->serviceID)) {
-                $service->serviceID = self::generateStayID('SV');
+                $service->serviceID = self::generateServiceID('SV');
             };
         });
     }
-    public static function generateStayID(string $prefix): string
+    public static function generateServiceID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',
