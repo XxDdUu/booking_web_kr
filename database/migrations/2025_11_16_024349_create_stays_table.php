@@ -18,23 +18,23 @@ return new class extends Migration
             $table->foreign('locationID')
                 ->references('locationID')       // Tên cột khóa chính bên bảng locations
                 ->on('locations')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             // 2. Xử lý categoryID
             $table->string('categoryID'); // Tạo cột string thay vì bigInteger
             $table->foreign('categoryID')
                 ->references('categoryID')       // Tên cột khóa chính bên bảng hotel_categories
                 ->on('categories')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             $table->string('serviceID'); // Tạo cột string thay vì bigInteger
             $table->foreign('serviceID')
                 ->references('serviceID')       // Tên cột khóa chính bên bảng hotel_categories
                 ->on('services')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             $table->string('stayName', 255);
             $table->text('description')->nullable();

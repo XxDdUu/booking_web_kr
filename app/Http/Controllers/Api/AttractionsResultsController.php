@@ -40,7 +40,12 @@ class AttractionsResultsController extends Controller
                     'locations.locationName'
                 )
                 ->whereRaw('locations.locationName LIKE BINARY ?', ["%$loc%"])
-                ->get();
+                ->get()
+                ->map(function ($attractions) {
+                    $attractions->rate = (float)$attractions->rate;
+                    $attractions->price = (float)$attractions->price;
+                    return $attractions;
+                });
 
             return response()->json([
                 'location' => $loc,

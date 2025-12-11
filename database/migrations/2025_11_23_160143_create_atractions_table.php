@@ -12,18 +12,37 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('attractions', function (Blueprint $table) {
-            $table->string('attractionID',255)->primary();
-            $table->string('serviceID',255);
-            $table->string('locationID',255);
-            $table->string('categoryID',255);
-            $table->string('attractionName',255);
+            $table->string('attractionID', 255)->primary();
+
+            $table->string('serviceID', 255);
+            $table->foreign('serviceID')
+                ->references('serviceID')       // Tên cột khóa chính bên bảng hotel_categories
+                ->on('services')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->string('locationID', 255);
+            $table->foreign('locationID')
+                ->references('locationID')       // Tên cột khóa chính bên bảng locations
+                ->on('locations')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->string('categoryID', 255);
+            $table->foreign('categoryID')
+                ->references('categoryID')       // Tên cột khóa chính bên bảng hotel_categories
+                ->on('categories')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->string('attractionName', 255);
             $table->text('description')->nullable();
-            $table->string('specificType',255);
-            $table->string('category',255);
-            $table->string('duration',255);
-            $table->decimal('rate',3,1);
-            $table->decimal('price',10,2);
-            $table->string('image',255)->nullable();
+            $table->string('specificType', 255);
+            $table->string('category', 255);
+            $table->string('duration', 255);
+            $table->decimal('rate', 3, 1);
+            $table->decimal('price', 10, 2);
+            $table->string('image', 255)->nullable();
             $table->timestamps();
         });
     }
