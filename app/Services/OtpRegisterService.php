@@ -6,7 +6,7 @@ use App\Repositories\OtpRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Services\TokenService;
 use App\Mail\OtpMail;
 
 class OtpRegisterService
@@ -14,10 +14,13 @@ class OtpRegisterService
     protected OtpRepository $otpRepo;
     protected UserRepository $userRepo;
 
-    public function __construct(OtpRepository $otpRepo, UserRepository $userRepo)
+    protected TokenService $tokenService;
+
+    public function __construct(OtpRepository $otpRepo, UserRepository $userRepo, TokenService $tokenService)
     {
         $this->userRepo = $userRepo;
         $this->otpRepo = $otpRepo;
+        $this->tokenService = $tokenService;
     }
 
     public function generateOtp(string $contact): int
@@ -76,21 +79,21 @@ class OtpRegisterService
         $user = $this->userRepo->createUser($data);
 
         if ($keepLoggedIn) {
-            $plainToken = Str::random(60);
-            $user->remember_token = hash('sha256', $plainToken);
-            $user->save();
+            $token = $this->tokenService->createRememberToken($user);
             return [
                 'success' => true,
                 'message' => 'Registered successfully',
                 'user' => $user,
-                'remember_token' => $plainToken,
+                'token' => $token,
             ];
         }
+        $token = $this->tokenService->createTemporaryToken($user);
 
         return [
             'success' => true,
             'message' => 'Registered successfully',
-            'user' => $user
+            'user' => $user,
+            'token' => $token
         ];
     }
 }

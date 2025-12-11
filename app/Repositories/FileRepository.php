@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 class FileRepository
 {
+    protected string $disk;
+
+    public function __construct()
+    {
+        $this->disk = config('filesystems.default');
+    }
     public function store($file, string $folder): string
     {
-        $disk = config('filesystems.default');
 
         $originalName = method_exists($file, 'getClientOriginalName')
             ? $file->getClientOriginalName()
@@ -20,7 +25,7 @@ class FileRepository
 
         $path = rtrim($folder, '/') . '/' . $filename;
 
-        Storage::disk($disk)->put(
+        Storage::disk($this->disk)->put(
             $path,
             file_get_contents($file)
         );
