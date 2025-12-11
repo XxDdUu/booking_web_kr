@@ -39,6 +39,6 @@ class UserController extends Controller
             'message' => 'Avatar updated successfully',
             'user' => $updated
         ]);
-    }
+        }
 
 }

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('locationName',255);
             $table->string('address',255)->nullable();
             $table->string('country',128)->nullable();
-            $table->string('pinCode',255)->nullable();
-            $table->text('image')->nullable();
+            $table->string('pinCode',length: 255)->nullable();
+            $table->string('location_image_path')->nullable();
             $table->timestamps();
         });
     }

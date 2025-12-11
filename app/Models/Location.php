@@ -17,7 +17,7 @@ class Location extends Model
         'address',
         'country',
         'pinCode',
-        'image'
+        'location_image_path',
     ];
     protected static function boot(): void
     {

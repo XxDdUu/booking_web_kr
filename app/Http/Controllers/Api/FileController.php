@@ -21,7 +21,7 @@ class FileController extends Controller
         ]);
         $file = $request->file('image');
         // store file under /storage/app/public/uploads
-        $fileData = $this->fileService->uploadImage($file);
+        $fileData = $this->fileService->uploadImage($file, 'uploads/avatar');
         return response()->json([
             'message' => 'Image uploaded successfully',
             ...$fileData
