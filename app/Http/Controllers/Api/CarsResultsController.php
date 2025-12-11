@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CarsResultsController extends Controller
 {
@@ -16,7 +18,7 @@ class CarsResultsController extends Controller
             $checkIn  = $request->query('checkin');
             $checkOut = $request->query('checkout');
 
-            Log::info('Search query:', [
+            Log::info('Search query - cars:', [
                 'location' => $loc,
                 'checkin' => $checkIn,
                 'checkout' => $checkOut
@@ -28,33 +30,44 @@ class CarsResultsController extends Controller
             }
 
             // 1. Query stays theo location
-            $stays = DB::table('stays')
-                ->select('stayID', 'stayName', 'location', 'address', 'rating', 'price', 'image')
-                ->whereRaw('location LIKE BINARY ?', ["%$loc%"])
-                ->get();
-                // ->map(function ($stay) {
-                //     // Ép kiểu về dạng number đúng chuẩn
-                //     $stay->rating = (float) $stay->rating;
-                //     $stay->price = (float) $stay->price;
-                //     return $stay;
-                // });
+            $carRental = DB::table('carRentals')
+                ->join('cars', 'carRentals.carID', '=', 'cars.carID')
+                ->select(
+                    'carRentalID',
+                    'cars.seatQuantity',
+                    'cars.luggageQuantity',
+                    'cars.mileageLimit',
+                    'cars.image',
+                    'carRentals.carName',
+                    'carRentals.checkInDestination',
+                    'carRentals.price',
+                    'carRentals.rate',
+                )
+                ->whereRaw('carRentals.checkInDestination LIKE BINARY ?', "%$loc%")
+                ->get()
+                ->map(function ($carRental) {
+                    // Ép kiểu về dạng number đúng chuẩn
+                    $carRental->rate = (float) $carRental->rate;
+                    $carRental->price = (float) $carRental->price;
+                    return $carRental;
+                });
 
             // Nếu có check-in và check-out thì tính days + totalPrice
             if ($checkIn && $checkOut) {
                 $days = Carbon::parse($checkIn)->diffInDays(Carbon::parse($checkOut));
 
                 // Thêm field mới cho từng stay
-                $stays = $stays->map(function ($stay) use ($days) {
-                    $stay->days = $days;
-                    $stay->totalPrice = $stay->price * $days;
-                    return $stay;
+                $carRental = $carRental->map(function ($carRental) use ($days) {
+                    $carRental->days = $days;
+                    $carRental->totalPrice = $carRental->price * $days;
+                    return $carRental;
                 });
             }
 
             return response()->json([
                 'location' => $loc,
                 'days' => $checkIn && $checkOut ? Carbon::parse($checkIn)->diffInDays(Carbon::parse($checkOut)) : null,
-                'results' => $stays
+                'results' => $carRental
             ]);
         } catch (Exception $e) {
             return response()->json([

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('category',255);
             $table->string('duration',255);
             $table->decimal('rate',3,1);
-            $table->decimal('price',8,2);
+            $table->decimal('price',10,2);
             $table->string('image',255)->nullable();
             $table->timestamps();
         });

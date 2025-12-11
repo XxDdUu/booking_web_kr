@@ -8,6 +8,7 @@ use App\Models\Location;
 use App\Models\Service;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CarRentalSeeder extends Seeder
 {
@@ -18,24 +19,32 @@ class CarRentalSeeder extends Seeder
     {
         $carRentals = require database_path('data/carRentals.php');
 
-        $haNoi = Location::where('locationName', 'like', '%Hà Nội%')->first();
-        $carService   = Service::where('serviceType', 'like', '%car%')->first();
-        $carNameMap = [
-            'Mercedes Coupe' => Car::where('carName', 'LIKE', '%Mercedes Coupe%')->first()->carID,
-            'Vinfast VF6' => Car::where('carName', 'LIKE', '%Vinfast VF6%')->first()->carID,
-            'Ford F-150' => Car::where('carName', 'LIKE', '%Ford F-150%')->first()->carID,
-            'Ferrari Purosangue' => Car::where('carName', 'LIKE', '%Ferrari Purosangue%')->first()->carID,
-            'Porsche 911' => Car::where('carName', 'LIKE', '%Porsche 911%')->first()->carID,
-
-        ];
-
         foreach ($carRentals as $item) {
             CarRental::create([
-                'locationID' => $haNoi->locationID,
-                'serviceID' => $carService->serviceID,
-                'carID' => $carNameMap[$item['carName']],
+                'locationID' => self::getCarLocationID($item['checkInDestination']),
+                'serviceID' => self::getCarServiceID(),
+                'carID' => self::getCarID($item['carName']),
                 ...$item
             ]);
         }
+    }
+    public function getCarLocationID(string $val)
+    {
+        // preload locations
+        return DB::table('locations')
+            ->whereRaw('? LIKE CONCAT("%", locationName, "%")', [$val])
+            ->value('locationID');
+    }
+    public function getCarServiceID()
+    {
+        return Service::where('serviceType', 'like', '%car%')
+            ->first()
+            ->serviceID;
+    }
+    public function getCarID($val)
+    {
+        // preload toàn bộ carID, không query 5 lần nữa
+        $cars = Car::pluck('carID', 'carName')->toArray();
+        return $cars[$val] ?? null;
     }
 }

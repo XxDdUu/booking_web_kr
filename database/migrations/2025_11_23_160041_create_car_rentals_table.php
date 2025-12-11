@@ -37,7 +37,7 @@ return new class extends Migration
 
             $table->string('carName',255);
             $table->text('checkInDestination');
-            $table->decimal('price',10,2);
+            $table->decimal('price',15,2);
             $table->decimal('rate',3,1);
 
             $table->timestamps();

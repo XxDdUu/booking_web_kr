@@ -40,9 +40,9 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('location', 128);
             $table->string('address', 255);
-            $table->decimal('rating', 2, 1);
+            $table->decimal('rating', 3, 1);
             $table->text('image')->nullable();
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 15, 2);
             $table->timestamps();
         });
     }
