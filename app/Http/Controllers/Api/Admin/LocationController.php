@@ -50,7 +50,7 @@ class LocationController extends Controller
             'address' => 'nullable|string',
             'country' => 'nullable|string',
             'pinCode' => 'nullable|string',
-            'image' => 'nullable|file|image|max:2048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,webp,svg|max:2048',
             'existing_image_path' => 'nullable|string',
         ]);
         Log::info('Validated data', ['validated' => $validated]);
