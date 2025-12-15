@@ -44,7 +44,6 @@ class LocationController extends Controller
     }
     public function put(Request $request)
     {
-        Log::info('Update location request received', ['request' => $request->all()]);
         $validated = $request->validate([
             'locationName' => 'nullable|string|max:255',
             'address' => 'nullable|string',
@@ -53,7 +52,6 @@ class LocationController extends Controller
             'image' => 'nullable|file|mimes:jpg,jpeg,png,webp,svg|max:2048',
             'existing_image_path' => 'nullable|string',
         ]);
-        Log::info('Validated data', ['validated' => $validated]);
         $locationID = $request->route('id');    
     
         $location = $this->service->updateLocation($locationID, $validated);

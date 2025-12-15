@@ -28,6 +28,28 @@ class FileController extends Controller
             ...$fileData
         ]);
     }
+    public function uploadMultiple(Request $request)
+    {
+        $request->validate([
+            'images'   => 'required|array',
+            'images.*' => 'file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
+            'folder'   => 'nullable|string',
+        ]);
+
+        $folder = $request->get('folder', 'uploads');
+        $files  = $request->file('images');
+
+        $results = [];
+
+        foreach ($files as $file) {
+            $results[] = $this->fileService->uploadImage($file, $folder);
+        }
+
+        return response()->json([
+            'message' => 'Images uploaded successfully',
+            'files'   => $results
+        ]);
+}
 
     public function get($filename)
     {

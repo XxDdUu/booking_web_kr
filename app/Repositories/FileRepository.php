@@ -14,11 +14,6 @@ class FileRepository
     }
     public function store($file, string $folder): string
     {
-
-        $originalName = method_exists($file, 'getClientOriginalName')
-            ? $file->getClientOriginalName()
-            : ($file->originalName ?? 'file');
-
         // Tạo tên file an toàn
         $ext = $file->getClientOriginalExtension();
         $filename = time() . '_' . uniqid() . '.' . $ext;
