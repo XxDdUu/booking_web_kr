@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\LocationKeywordsController;
 use App\Http\Controllers\Api\StaysResultsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\LocationController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaysController;
 use App\Http\Controllers\Api\Staff\StayFormController;
@@ -39,6 +42,12 @@ Route::post('/admin/locations', [LocationController::class, 'store']);
 Route::put('/admin/locations/{id}', [LocationController::class, 'put']);
 Route::get('/admin/locations', [LocationController::class, 'index']);
 Route::get('/admin/customer-staff', [AdminUserController::class, 'getCustomerAndStaff']);
+
+Route::post('/bookings',[BookingController::class,'store']);
+route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
+
+
+
 
 Route::post('/staff/stays', [StaysController::class, 'store']);
 Route::get('/staff/stay-form', [StayFormController::class, 'getFormData']);

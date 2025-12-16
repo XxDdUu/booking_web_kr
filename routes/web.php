@@ -26,5 +26,9 @@ Route::get('/test_s3', function ()  {
     }
 });
 
+Route::get('/test-env', function() {
+    return env('APP_KEY');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
