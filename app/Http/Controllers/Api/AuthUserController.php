@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\AuthService;
 use App\Services\TokenService;
 use Illuminate\Support\Facades\Log;
+
 class AuthUserController extends Controller
 {
     protected $service;
@@ -22,19 +23,33 @@ class AuthUserController extends Controller
     }
        public function me(Request $request)
     {
-        $header = $request->header('Authorization');
-        $token = $this->tokenService->extractToken($header);
-        
-        $user = $this->tokenService->getUserFromToken($token);
+        try {
+            $header = $request->header('Authorization');
+            if(!$header){
+                return response()->json(['user'=>null],200);
+            }
 
-        if (!$user) {
-            return response()->json(['user' => null], 200);
-        }
+            $token = $this->tokenService->extractToken($header);
+            if(!$token){
+                return response()->json(['token'=>null],200);
+            }
+            
+            $user = $this->tokenService->getUserFromToken($token);
 
-        $user->makeHidden(['password', 'remember_token']);
+            if (!$user) {
+                return response()->json(['user' => null], 200);
+            }
 
-        return response()->json(['user' => $user]);
+            $user->makeHidden(['password', 'remember_token']);
+
+            return response()->json(['user' => $user]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'user' => null,
+                'Error message' => $e->getMessage()
+            ],200);
     }
+}
 
     public function logout(Request $request)
     {

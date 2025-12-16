@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\LocationKeywordsController;
 use App\Http\Controllers\Api\StaysResultsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\AdminLocationController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
@@ -66,3 +69,7 @@ Route::prefix('staff')->group(function () {
     Route::post('/stays', [StaffStaysController::class, 'store']);
     Route::get('/stay-form', [StaffStayFormController::class, 'getFormData']);
 });
+
+Route::post('/bookings',[BookingController::class,'store']);
+route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
+

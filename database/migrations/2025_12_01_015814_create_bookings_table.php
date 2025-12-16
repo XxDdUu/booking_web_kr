@@ -21,14 +21,6 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // Tương tự cho services
-            $table->string('serviceID');
-            $table->foreign('serviceID')
-                ->references('serviceID') // Tên cột khoá chính bên bảng services
-                ->on('services')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
             // $table->string('status', 50)->default('pending')->check('confirmed', 'cancelled', 'confirmed modified', 'pending');
             $table->string('status', 50)->default('pending')->comment('confirmed, cancelled, confirmed modified, pending');
             $table->timestamps();

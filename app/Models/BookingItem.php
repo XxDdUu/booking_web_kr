@@ -4,31 +4,31 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class BookingItem extends Model
 {
-    protected $table = 'payments';
-    protected $primaryKey = 'paymentID';
+    protected $table = 'bookingItems';
+    protected $primaryKey = 'bookingItemID';
     public $incrementing = false; // vì PK là VARCHAR
     protected $keyType = 'string';
 
     protected $fillable = [
         'bookingID',
-        'amount',
-        'paymentDate',
-        'paymentMethod',
-        'transactionID',
-        'status',
+        'serviceID',
+        'serviceType',
+        'quantity',
+        'subtotal',
+        'metaJson'
     ];
     protected static function boot(): void
     {
         parent::boot();
-        static::creating(function ($payment) {
-            if (empty($payment->paymentID)) {
-                $payment->paymentID = self::generatePaymentID('PAY');
+        static::creating(function ($bookingItem) {
+            if (empty($bookingItem->bookingItemID)) {
+                $bookingItem->bookingItemID = self::generateBkgItemID('BKGITEM');
             };
         });
     }
-    public static function generatePaymentID(string $prefix): string
+    public static function generateBkgItemID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',
