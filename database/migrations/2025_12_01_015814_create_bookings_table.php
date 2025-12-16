@@ -21,11 +21,10 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // Tương tự cho services
-            $table->string('serviceID');
-            $table->foreign('serviceID')
-                ->references('serviceID') // Tên cột khoá chính bên bảng services
-                ->on('services')
+            $table->string('bookingItemID');
+            $table->foreign('bookingItemID')
+                ->references('bookingItemID')
+                ->on('bookingItem')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 

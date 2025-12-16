@@ -10,6 +10,9 @@ use App\Http\Controllers\Api\LocationKeywordsController;
 use App\Http\Controllers\Api\StaysResultsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\LocationController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/check_email', [AuthCheckController::class, 'checkEmail']);
@@ -34,4 +37,10 @@ Route::get('/cars/search',[CarsResultsController::class,'searchingResults']);
 Route::post('/admin/locations', [LocationController::class, 'store']);
 Route::put('/admin/locations/{id}', [LocationController::class, 'put']);
 Route::get('/admin/locations', [LocationController::class, 'index']);
+
+Route::post('/bookings',[BookingController::class,'store']);
+route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
+
+
+
 
