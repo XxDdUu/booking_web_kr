@@ -14,8 +14,6 @@ class FileService
 
     public function uploadImage(UploadedFile $file, string $folder = 'uploads')
     {
-        $diskName = config('filesystems.default');
-
         $path = $this->repo->store($file, $folder);
 
         $url = $this->getUrl($path);

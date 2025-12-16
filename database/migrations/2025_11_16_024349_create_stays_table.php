@@ -38,10 +38,10 @@ return new class extends Migration
 
             $table->string('stayName', 255);
             $table->text('description')->nullable();
-            $table->string('location', 128);
+            $table->string('location', 128)->nullable();
             $table->string('address', 255);
-            $table->decimal('rating', 3, 1);
-            $table->text('image')->nullable();
+            $table->decimal('rating', 3, 1)->nullable();
+            $table->json('image')->nullable();
             $table->decimal('price', 15, 2);
             $table->timestamps();
         });

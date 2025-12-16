@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Str;
 use App\Repositories\TokenRepository;
-
+use Log;
 class TokenService
 {
     protected TokenRepository $tokenRepo;
@@ -50,7 +50,6 @@ class TokenService
         // 1. Search in temporary tokens (Redis)
         $user = $this->tokenRepo->getUserByTempToken($token);
         if ($user) return $user;
-
         // 2. Search in remember tokens (DB)
         $hashed = hash('sha256', $token);
         return $this->tokenRepo->getUserByRememberToken($hashed);

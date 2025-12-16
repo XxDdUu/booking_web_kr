@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\Location;
+use Illuminate\Database\Eloquent\Collection;
 
 class LocationRepository
 {
@@ -26,5 +27,11 @@ class LocationRepository
     public function paginate(int $perPage = 10)
     {
         return Location::orderBy('created_at', 'desc')->paginate($perPage);
+    }
+    public function getForStayForm(): Collection {
+        return Location::query()
+            ->select('locationID', 'locationName')
+            ->orderBy('locationName')
+            ->get();
     }
 }

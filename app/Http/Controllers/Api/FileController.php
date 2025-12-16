@@ -20,13 +20,36 @@ class FileController extends Controller
             'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
         ]);
         $file = $request->file('image');
+        $folder = $request->get('folder');
         // store file under /storage/app/public/uploads
-        $fileData = $this->fileService->uploadImage($file, 'uploads/avatar');
+        $fileData = $this->fileService->uploadImage($file, $folder);
         return response()->json([
             'message' => 'Image uploaded successfully',
             ...$fileData
         ]);
     }
+    public function uploadMultiple(Request $request)
+    {
+        $request->validate([
+            'images'   => 'required|array',
+            'images.*' => 'file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
+            'folder'   => 'nullable|string',
+        ]);
+
+        $folder = $request->get('folder', 'uploads');
+        $files  = $request->file('images');
+
+        $results = [];
+
+        foreach ($files as $file) {
+            $results[] = $this->fileService->uploadImage($file, $folder);
+        }
+
+        return response()->json([
+            'message' => 'Images uploaded successfully',
+            'files'   => $results
+        ]);
+}
 
     public function get($filename)
     {

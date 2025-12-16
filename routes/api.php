@@ -14,13 +14,16 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Staff\StaysController;
+use App\Http\Controllers\Api\Staff\StayFormController;
+use App\Http\Controllers\Api\Admin\AdminUserController;
 
 Route::post('/check_email', [AuthCheckController::class, 'checkEmail']);
 Route::post('/check_phone', [AuthCheckController::class, 'checkPhone']);
 Route::post('/otp/send-otp', [AuthOtpRegisterController::class, 'sendOtp']);
 Route::post('/otp/verify-otp', [AuthOtpRegisterController::class, 'verifyOtp']);
-Route::post('/auth/register', [AuthOtpRegisterController::class, 'register']);
 
+Route::post('/auth/register', [AuthOtpRegisterController::class, 'register']);
 Route::get('/auth/me', [AuthUserController::class, 'me']);
 Route::patch('/user/avatar', [UserController::class, 'updateAvatarUrl']);
 Route::post('/auth/logout', [AuthUserController::class, 'logout']);
@@ -28,15 +31,17 @@ Route::post('/auth/login', [AuthUserController::class, 'login']);
 
 
 Route::post('/upload', action: [FileController::class, 'upload']);
-Route::get('/image/{filename}', [FileController::class, 'get']);
+Route::post('/upload-multiple', [FileController::class, 'uploadMultiple']);
 Route::get('/keysearch',[LocationKeywordsController::class,'getKeywords']);
 Route::get('/stays/search',[StaysResultsController::class,'searchingResults']);
 Route::get('/stays/all',[StaysResultsController::class,'getAllResults']);
 Route::get('/attractions/search',[AttractionsResultsController::class,'searchingResults']);
 Route::get('/cars/search',[CarsResultsController::class,'searchingResults']);
+
 Route::post('/admin/locations', [LocationController::class, 'store']);
 Route::put('/admin/locations/{id}', [LocationController::class, 'put']);
 Route::get('/admin/locations', [LocationController::class, 'index']);
+Route::get('/admin/customer-staff', [AdminUserController::class, 'getCustomerAndStaff']);
 
 Route::post('/bookings',[BookingController::class,'store']);
 route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
@@ -44,3 +49,5 @@ route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
 
 
 
+Route::post('/staff/stays', [StaysController::class, 'store']);
+Route::get('/staff/stay-form', [StayFormController::class, 'getFormData']);
