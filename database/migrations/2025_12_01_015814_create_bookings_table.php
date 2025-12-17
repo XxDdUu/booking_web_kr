@@ -21,13 +21,6 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->string('bookingItemID');
-            $table->foreign('bookingItemID')
-                ->references('bookingItemID')
-                ->on('bookingItem')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
             // $table->string('status', 50)->default('pending')->check('confirmed', 'cancelled', 'confirmed modified', 'pending');
             $table->string('status', 50)->default('pending')->comment('confirmed, cancelled, confirmed modified, pending');
             $table->timestamps();

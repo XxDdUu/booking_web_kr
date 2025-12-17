@@ -12,16 +12,15 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\LocationController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaysController;
 use App\Http\Controllers\Api\Staff\StayFormController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
 
-Route::post('/check_email', [AuthCheckController::class, 'checkEmail']);
-Route::post('/check_phone', [AuthCheckController::class, 'checkPhone']);
-Route::post('/otp/send-otp', [AuthOtpRegisterController::class, 'sendOtp']);
-Route::post('/otp/verify-otp', [AuthOtpRegisterController::class, 'verifyOtp']);
+Route::post('/auth/check-email', [AuthCheckController::class, 'checkEmail']);
+Route::post('/auth/check-phone', [AuthCheckController::class, 'checkPhone']);
+Route::post('/otp/send', [AuthOtpRegisterController::class, 'sendOtp']);
+Route::post('/otp/verify', [AuthOtpRegisterController::class, 'verifyOtp']);
 
 Route::post('/auth/register', [AuthOtpRegisterController::class, 'register']);
 Route::get('/auth/me', [AuthUserController::class, 'me']);
@@ -44,10 +43,6 @@ Route::get('/admin/locations', [LocationController::class, 'index']);
 Route::get('/admin/customer-staff', [AdminUserController::class, 'getCustomerAndStaff']);
 
 Route::post('/bookings',[BookingController::class,'store']);
-route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
-
-
-
-
+route::post('/payment/confirm',[PaymentController::class,'confirm']);
 Route::post('/staff/stays', [StaysController::class, 'store']);
 Route::get('/staff/stay-form', [StayFormController::class, 'getFormData']);

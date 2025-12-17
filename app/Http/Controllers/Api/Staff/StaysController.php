@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Services\Staff\StayService;
 use App\Http\Controllers\Controller;
 use App\Services\TokenService;
-use Log;
+use Illuminate\Support\Facades\Log;
+// use Log;
 class StaysController extends Controller
 {
     public function __construct(
