@@ -5,7 +5,7 @@ namespace App\Repositories\Admin;
 use App\Models\Location;
 use Illuminate\Database\Eloquent\Collection;
 
-class LocationRepository
+class AdminLocationRepository
 {
     public function create(array $data): Location
     {

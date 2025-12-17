@@ -2,16 +2,16 @@
 
 namespace App\Services\Staff;
 
-use App\Repositories\Admin\LocationRepository;
-use App\Repositories\Admin\ServiceRepository;
-use App\Repositories\Admin\CategoryRepository;
+use App\Repositories\Admin\AdminLocationRepository;
+use App\Repositories\Admin\AdminServiceRepository;
+use App\Repositories\Admin\AdminCategoryRepository;
 
-class StayFormService
+class StaffStayFormService
 {
     public function __construct(
-        protected LocationRepository $locationRepo,
-        protected ServiceRepository  $serviceRepo,
-        protected CategoryRepository $categoryRepo,
+        protected AdminLocationRepository $locationRepo,
+        protected AdminServiceRepository  $serviceRepo,
+        protected AdminCategoryRepository $categoryRepo,
     ) {}
 
     public function getFormData(): array

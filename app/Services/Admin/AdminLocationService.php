@@ -2,16 +2,16 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\Admin\LocationRepository;
+use App\Repositories\Admin\AdminLocationRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Services\FileService;
 use Log;
-class LocationService
+class AdminLocationService
 {
-    protected LocationRepository $repo;
+    protected AdminLocationRepository $repo;
     protected FileService $fileService;
 
-    public function __construct(LocationRepository $repo, FileService $fileService)
+    public function __construct(AdminLocationRepository $repo, FileService $fileService)
     {
         $this->repo = $repo;
         $this->fileService = $fileService;

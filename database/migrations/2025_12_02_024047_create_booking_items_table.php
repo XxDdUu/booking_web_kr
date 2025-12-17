@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bookingItems', function (Blueprint $table) {
+        Schema::create('booking_items', function (Blueprint $table) {
             $table->string('bookingItemID',255);
 
             // Khóa ngoại liên kết với bảng bookings

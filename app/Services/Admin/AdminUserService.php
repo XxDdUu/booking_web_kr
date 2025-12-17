@@ -9,7 +9,7 @@ class AdminUserService
         protected AdminUserRepository $repo
     ) {}
     public function getCustomerAndStaff() {
-        $user = $this->repo->getCustomerAndStaff();
+        $user = $this->repo->getByRolesWithBookingCount(['customer', 'staff']);
 
         return [
             'customers' => $user->where('role', 'customer')->values(),

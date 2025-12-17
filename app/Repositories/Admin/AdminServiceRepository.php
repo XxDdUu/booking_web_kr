@@ -5,7 +5,7 @@ namespace App\Repositories\Admin;
 use App\Models\Service;
 use Illuminate\Support\Collection;
 
-class ServiceRepository
+class AdminServiceRepository
 {
     public function getForStayForm(): Collection
     {

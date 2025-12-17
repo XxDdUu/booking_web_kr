@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api\Staff;
 
 use Illuminate\Http\Request;
-use App\Services\Staff\StayService;
+use App\Services\Staff\StaffStayService;
 use App\Http\Controllers\Controller;
 use App\Services\TokenService;
-use Illuminate\Support\Facades\Log;
-// use Log;
-class StaysController extends Controller
+use Log;
+class StaffStaysController extends Controller
 {
     public function __construct(
-        protected StayService $service,
+        protected StaffStayService $service,
         protected TokenService $tokenService
     ) {}
 

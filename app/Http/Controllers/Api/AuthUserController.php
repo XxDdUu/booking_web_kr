@@ -23,31 +23,31 @@ class AuthUserController extends Controller
     }
        public function me(Request $request)
     {
-        try{
-        $header = $request->header('Authorization');
-        if(!$header){
-            return response()->json(['user'=>null],200);
-        }
+        try {
+            $header = $request->header('Authorization');
+            if(!$header){
+                return response()->json(['user'=>null],200);
+            }
 
-        $token = $this->tokenService->extractToken($header);
-        if(!$token){
-            return response()->json(['token'=>null],200);
-        }
-        
-        $user = $this->tokenService->getUserFromToken($token);
+            $token = $this->tokenService->extractToken($header);
+            if(!$token){
+                return response()->json(['token'=>null],200);
+            }
+            
+            $user = $this->tokenService->getUserFromToken($token);
 
-        if (!$user) {
-            return response()->json(['user' => null], 200);
-        }
+            if (!$user) {
+                return response()->json(['user' => null], 200);
+            }
 
-        $user->makeHidden(['password', 'remember_token']);
+            $user->makeHidden(['password', 'remember_token']);
 
-        return response()->json(['user' => $user]);
-    }catch(\Throwable $e){
-        return response()->json([
-            'user' => null,
-            'Error message' => $e->getMessage()
-        ],200);
+            return response()->json(['user' => $user]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'user' => null,
+                'Error message' => $e->getMessage()
+            ],200);
     }
 }
 

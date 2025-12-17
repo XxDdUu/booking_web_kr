@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Services\Admin\LocationService;
+use App\Services\Admin\AdminLocationService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
-class LocationController extends Controller
+class AdminLocationController extends Controller
 {
-    protected LocationService $service;
+    protected AdminLocationService $service;
 
-    public function __construct(LocationService $service)
+    public function __construct(AdminLocationService $service)
     {
         $this->service = $service;
     }

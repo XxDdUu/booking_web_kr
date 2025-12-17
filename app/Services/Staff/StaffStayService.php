@@ -1,11 +1,11 @@
 <?php
 namespace App\Services\Staff;
-use App\Repositories\Staff\StayRepository;
+use App\Repositories\Staff\StaffStayRepository;
 use Illuminate\Support\Facades\DB;
-class StayService
+class StaffStayService
 {
     public function __construct(
-        protected StayRepository $repo
+        protected StaffStayRepository $repo
     ) {}
 
     public function createStay(array $data)

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Staff;
 use App\Models\Stay;
-class StayRepository
+class StaffStayRepository
 {
     public function create(array $data): Stay
     {
