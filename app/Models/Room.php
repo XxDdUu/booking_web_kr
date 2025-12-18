@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Str;
 
 class Room extends Model
 {
@@ -12,21 +13,33 @@ class Room extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'RoomID',
-        'HotelID',
-        'Room_type_ID',
-        'Room_name',
-        'Description',
-        'Current_price'
+        'roomID',
+        'stayID',
+        'roomTypeID',
+        'roomName',
+        'description',
+        'quantity',
+        'currentPrice',
+        'availability'
     ];
 
     public function stay()
     {
-        return $this->belongsTo(Stay::class, 'HotelID', 'HotelID');
+        return $this->belongsTo(Stay::class, 'stayID', 'stayID');
     }
 
     public function roomType()
     {
-        // return $this->belongsTo(RoomType::class, 'Room_type_ID', 'Room_type_ID');
+        return $this->belongsTo(RoomType::class, 'roomTypeID', 'roomTypeID');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($room){
+            if(empty($room->roomID)){
+                $room->roomID = 'RType-'.Str::uuid();
+            }
+        });
     }
 }
