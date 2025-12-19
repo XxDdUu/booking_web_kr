@@ -34,4 +34,21 @@ class AdminLocationRepository
             ->orderBy('locationName')
             ->get();
     }
+    public function delete(string $locationID)
+    {
+        $location = Location::find($locationID);
+        if (!$location) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Location not found'
+            ], 404);
+        }
+
+        $location->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'Location deleted successfully'
+        ], 200);
+    }
 }

@@ -31,12 +31,4 @@ class UserService
     {
         return $this->user_repo->update($user, $data);
     }
-    public function getCustomerAndStaff() {
-        $user = $this->user_repo->getCustomerAndStaff();
-
-        return [
-            'customers' => $user->where('role', 'customer')->values(),
-            'staff' => $user->where('role', 'staff')->values(),
-        ];
-    }
 }

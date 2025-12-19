@@ -29,7 +29,6 @@ class StaffStaysController extends Controller
                 'message' => 'Forbidden'
             ], 403);
         }
-        Log::info($request->all());
         $validated = $request->validate([
             'locationID' => 'required|exists:locations,locationID',
             'serviceID'  => 'required|exists:services,serviceID',
@@ -47,7 +46,6 @@ class StaffStaysController extends Controller
             'image'      => 'nullable|array',
             'image.*'    => 'nullable|string',
         ]);
-        Log::info($validated);
 
         $stay = $this->service->createStay($validated);
 

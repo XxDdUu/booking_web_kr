@@ -36,6 +36,8 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::patch('/avatar', [UserController::class, 'updateAvatarUrl']);
+    Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
+    Route::get('/cars/search', [CarsResultsController::class, 'searchingResults']);
 });
 
 Route::prefix('upload')->group(function () {
@@ -59,6 +61,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/', [AdminLocationController::class, 'store']);
         Route::put('/{id}', [AdminLocationController::class, 'put']);
         Route::get('/', [AdminLocationController::class, 'index']);
+        Route::delete('/{id}', [AdminLocationController::class, 'delete']);
     });
 
     Route::get('/customer-staff', [AdminUserController::class, 'getCustomerAndStaff']);

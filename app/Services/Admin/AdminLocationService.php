@@ -68,5 +68,8 @@ class AdminLocationService
 
         return $this->repo->update($locationID, $data);
     }
-
+    public function deleteLocation(string $locationID) 
+    {
+        return $this->repo->delete($locationID);
+    }
 }

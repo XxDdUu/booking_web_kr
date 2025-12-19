@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Services\Admin\AdminLocationService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
@@ -61,5 +62,14 @@ class AdminLocationController extends Controller
             'data' => $location
         ], 201);
 
+    }
+    public function delete(string $locationID) 
+    {
+        $location = $this->service->deleteLocation($locationID);
+
+        return response()->json([
+            'message' => 'Location deleted successfully',
+            'data' => $location
+        ], 200);
     }
 }
