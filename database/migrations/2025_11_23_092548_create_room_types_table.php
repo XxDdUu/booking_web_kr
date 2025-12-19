@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Schema::create('room_types', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::create('roomTypes', function (Blueprint $table) {
+            $table->string('roomTypeID',255)->primary();
+            $table->string('roomType',250);
+            $table->timestamps();
+        });
     }
 
     /**

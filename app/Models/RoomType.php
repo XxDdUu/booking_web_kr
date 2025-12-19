@@ -6,13 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class RoomType extends Model
 {
-    protected $table = 'room_types';
-    protected $primaryKey = 'RoomTypeID';
-    // protected $incrementing = false;
+    protected $table = 'roomTypes';
+    protected $primaryKey = 'roomTypeID';
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
-        'Room_type_ID',
-        'Room_type_name'
+        'roomTypeID',
+        'roomType'
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($roomType){
+            if(empty($roomType->roomTypeID)){
+                $roomType->roomTypeID = 'RType-'.Str::uuid();
+            }
+        });
+    }
+
 }
