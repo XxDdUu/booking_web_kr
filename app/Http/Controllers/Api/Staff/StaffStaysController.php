@@ -36,7 +36,6 @@ class StaffStaysController extends Controller
 
             'stayName'   => 'required|string|max:128',
             'description'=> 'nullable|string',
-            'location'   => 'nullable|string',
             'address'    => 'nullable|string',
 
             'price'      => 'required|numeric|min:0',
@@ -46,7 +45,6 @@ class StaffStaysController extends Controller
             'image'      => 'nullable|array',
             'image.*'    => 'nullable|string',
         ]);
-
         $stay = $this->service->createStay($validated);
 
         return response()->json([

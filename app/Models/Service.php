@@ -8,7 +8,7 @@ class Service extends Model
 {
     //
     protected $table = 'services';
-    protected $primaryKey = 'serviceId';
+    protected $primaryKey = 'serviceID';
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
@@ -31,6 +31,14 @@ class Service extends Model
             random_int(10, 99),
             random_int(10, 99),
             random_int(1000, 9999)
+        );
+    }
+    public function stays()
+    {
+        return $this->hasMany(
+            Stay::class,
+            'serviceID',
+            'serviceID'
         );
     }
 }

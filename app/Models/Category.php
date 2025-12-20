@@ -32,4 +32,12 @@ class Category extends Model
             random_int(1000, 9999)
         );
     }
+    public function stays()
+    {
+        return $this->hasMany(
+            Stay::class,
+            'categoryID',
+            'categoryID'
+        );
+    }
 }

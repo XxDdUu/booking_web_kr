@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Storage;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Room;
 use Str;
@@ -17,6 +17,7 @@ class Stay extends Model
         'price' => 'decimal:2',
         'rate'  => 'decimal:1',
     ];
+    protected $appends = ['image_urls'];
 
 
     protected $fillable = [
@@ -25,7 +26,6 @@ class Stay extends Model
         'serviceID',
         'stayName',
         'description',
-        'location',
         'rate', 
         'address',
         'image',
@@ -56,13 +56,19 @@ class Stay extends Model
             random_int(1000, 9999)
         );
     }
+    public function getImageUrlsAttribute(): array
+    {
+        return collect($this->image)->map(
+            fn ($img) => Storage::url($img)
+        )->toArray();
+    }
     public function location() {
-        return $this->belongsTo(Location::class, 'locationID');
+        return $this->belongsTo(Location::class, 'locationID', 'locationID');
     }
     public function service() {
-        return $this->belongsTo(Service::class, 'serviceID');
+        return $this->belongsTo(Service::class, 'serviceID', 'serviceID');
     }
     public function category() {
-        return $this->belongsTo(Category::class, 'categoryID');
+        return $this->belongsTo(Category::class, 'categoryID', 'categoryID');
     }
 }

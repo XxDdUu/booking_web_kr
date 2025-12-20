@@ -17,7 +17,7 @@ class FileController extends Controller
     public function upload(Request $request)
     {   
         $request->validate([
-            'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
+            'image' => 'required|file|mimes:jpg,png,jpeg,gif,webp,svg|max:20480',
         ]);
         $file = $request->file('image');
         $folder = $request->get('folder');
@@ -32,7 +32,7 @@ class FileController extends Controller
     {
         $request->validate([
             'images'   => 'required|array',
-            'images.*' => 'file|mimes:jpg,png,jpeg,gif,webp,svg|max:2048',
+            'images.*' => 'file|mimes:jpg,png,jpeg,gif,webp,svg|max:20480',
             'folder'   => 'nullable|string',
         ]);
 

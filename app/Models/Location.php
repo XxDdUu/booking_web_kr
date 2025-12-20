@@ -38,4 +38,21 @@ class Location extends Model
             random_int(1000, 9999)
         );
     }
+    public function stays()
+    {
+        return $this->hasMany(
+            Stay::class,
+            'locationID',
+            'locationID'
+        );
+    }
+    public function scopeNameLikeBinary($query, string $keyword)
+    {
+        return $query->where(
+            'locationName',
+            'LIKE BINARY',
+            "%{$keyword}%"
+        );
+    }
+
 }

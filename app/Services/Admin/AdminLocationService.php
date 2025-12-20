@@ -39,7 +39,6 @@ class AdminLocationService
 
     public function createLocation(array $data)
     {
-
         if (isset($data['image']) && $data['image'] instanceof \Illuminate\Http\UploadedFile) {
             $path = $this->fileService->uploadImage($data['image'], 'uploads/locations')['path'];
             

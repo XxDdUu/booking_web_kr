@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\AuthOtpRegisterController;
 use App\Http\Controllers\Api\AuthUserController;
 use App\Http\Controllers\Api\CarsResultsController;
 use App\Http\Controllers\Api\FileController;
-use App\Http\Controllers\Api\LocationKeywordsController;
+use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\StaysController;
 use App\Http\Controllers\Api\StaysResultsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\AdminLocationController;
@@ -45,11 +46,10 @@ Route::prefix('upload')->group(function () {
     Route::post('/multiple', [FileController::class, 'uploadMultiple']);
 });
 
-Route::get('/keywords', [LocationKeywordsController::class, 'getKeywords']);
-
 Route::prefix('stays')->group(function () {
     Route::get('/search', [StaysResultsController::class, 'searchingResults']);
     Route::get('/all', [StaysResultsController::class, 'getAllResults']);
+    Route::get('/', [StaysController::class, 'index']);
 });
 
 Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
@@ -63,10 +63,12 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminLocationController::class, 'index']);
         Route::delete('/{id}', [AdminLocationController::class, 'delete']);
     });
-
     Route::get('/customer-staff', [AdminUserController::class, 'getCustomerAndStaff']);
 });
 
+Route::prefix('home')->group(function () {
+    Route::get('locations', [LocationController::class, 'homepage']);
+});
 
 Route::prefix('staff')->group(function () {
     Route::post('/stays', [StaffStaysController::class, 'store']);
