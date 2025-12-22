@@ -32,9 +32,6 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // ENUM cho loại dịch vụ
-            $table->enum('serviceType', ['stay', 'car', 'attraction']);
-
             $table->integer('quantity')->default(1);
 
             // Dùng Decimal cho tiền tệ để tránh lỗi làm tròn số thực (floating point)

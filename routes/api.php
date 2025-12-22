@@ -11,13 +11,14 @@ use App\Http\Controllers\Api\StaysController;
 use App\Http\Controllers\Api\StaysResultsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\AdminLocationController;
+use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
-use App\Http\Controllers\Api\Admin\AdminUserController;
+
 
 Route::prefix('auth')->group(function () {
     Route::post('/check-email', [AuthCheckController::class, 'checkEmail']);
@@ -50,6 +51,7 @@ Route::prefix('stays')->group(function () {
     Route::get('/search', [StaysResultsController::class, 'searchingResults']);
     Route::get('/all', [StaysResultsController::class, 'getAllResults']);
     Route::get('/', [StaysController::class, 'index']);
+    Route::get('{id}', [StaysController::class, 'show']);
 });
 
 Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);

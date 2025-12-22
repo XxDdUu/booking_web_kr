@@ -29,7 +29,8 @@ services:
       - dbdata:/var/lib/mysql
     networks:
       - booking-network
-      
+    # ports:
+    # - "3306:3306" # dev local only
   redis:
     image: redis:7
     container_name: booking-redis

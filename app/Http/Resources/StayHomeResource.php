@@ -9,6 +9,7 @@ class StayHomeResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'stayID' => $this->stayID,
             'stayName' => $this->stayName,
             'location' => optional($this->location)->locationName,
             'address' => $this->address,

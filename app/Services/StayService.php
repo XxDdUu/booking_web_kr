@@ -15,4 +15,7 @@ class StayService
     {
         return $this->repo->getStaysForCard(8);
     }
+    public function getStayById(string $id) {
+        return $this->repo->getStayById($id);
+    } 
 }

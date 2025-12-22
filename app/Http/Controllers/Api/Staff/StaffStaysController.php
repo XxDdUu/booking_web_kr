@@ -31,7 +31,6 @@ class StaffStaysController extends Controller
         }
         $validated = $request->validate([
             'locationID' => 'required|exists:locations,locationID',
-            'serviceID'  => 'required|exists:services,serviceID',
             'categoryID' => 'required|exists:categories,categoryID',
 
             'stayName'   => 'required|string|max:128',

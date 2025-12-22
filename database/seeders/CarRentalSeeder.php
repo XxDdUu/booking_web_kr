@@ -37,9 +37,9 @@ class CarRentalSeeder extends Seeder
     }
     public function getCarServiceID()
     {
-        return Service::where('serviceType', 'like', '%car%')
-            ->first()
-            ->serviceID;
+        return Service::create([
+            'serviceType' => 'car'
+        ])->serviceID;
     }
     public function getCarID($val)
     {
