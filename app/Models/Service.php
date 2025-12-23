@@ -41,4 +41,8 @@ class Service extends Model
             'serviceID'
         );
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'serviceID', 'serviceID');
+    }
 }

@@ -29,7 +29,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->string('serviceID'); // Tạo cột string thay vì bigInteger
+            $table->string('serviceID')->unique(); // Tạo cột string thay vì bigInteger
             $table->foreign('serviceID')
                 ->references('serviceID')       // Tên cột khóa chính bên bảng hotel_categories
                 ->on('services')

@@ -28,6 +28,8 @@ return new class extends Migration
                 ->on('services')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->integer('rating');
+            $table->longText('review');
 
             $table->timestamps();
         });

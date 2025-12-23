@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Stay;
 use Illuminate\Support\Collection;
+use Log;
 
 class StayRepository
 {
@@ -24,9 +25,15 @@ class StayRepository
             ->with([
                 'location',
                 'service',
-                'category'
+                'category',
+                'reviews.user',
             ])
             ->where('stayID', $id)
             ->first();
+    }
+    public function updateRatingByService(string $serviceID, float $rating): void
+    {
+        Stay::where('serviceID', $serviceID)
+        ->update(['rating' => $rating]);
     }
 }

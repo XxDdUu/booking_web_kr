@@ -25,10 +25,15 @@ class StaysSeeder extends Seeder
         ]);
 
         foreach ($stays as $item) {
+
+            $service = Service::create([
+                'serviceType' => 'stay'
+            ]);
+
             Stay::create([
                 'locationID' => $daNang->locationID,
                 'categoryID' => $hotelCategory->categoryID,
-                'serviceID' => $service->serviceID,
+                'serviceID'  => $service->serviceID,
                 ...$item
             ]);
         }

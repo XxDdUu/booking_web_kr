@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StayDetailsResource extends JsonResource
@@ -10,6 +11,7 @@ class StayDetailsResource extends JsonResource
     {
         return [
             'stayID' => $this->stayID,
+            'serviceID' => $this->serviceID,
             'stayName' => $this->stayName,
             'description' => $this->description,
             'address' => $this->address,
@@ -30,6 +32,9 @@ class StayDetailsResource extends JsonResource
             'service' => $this->whenLoaded(
                 'service',
                 fn () => $this->service->serviceType
+            ),
+            'reviews' => ReviewResource::collection(
+                $this->whenLoaded('reviews')
             ),
         ];
     }

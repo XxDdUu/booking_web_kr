@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\StaysController;
 use App\Http\Controllers\Api\StaysResultsController;
+use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Admin\AdminLocationController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
@@ -38,6 +39,8 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('user')->group(function () {
     Route::patch('/avatar', [UserController::class, 'updateAvatarUrl']);
+    Route::post('/review', [ReviewController::class, 'store']);
+    Route::delete('/review/{reviewID}', [ReviewController::class, 'destroy']);
     Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
     Route::get('/cars/search', [CarsResultsController::class, 'searchingResults']);
 });
@@ -52,6 +55,7 @@ Route::prefix('stays')->group(function () {
     Route::get('/all', [StaysResultsController::class, 'getAllResults']);
     Route::get('/', [StaysController::class, 'index']);
     Route::get('{id}', [StaysController::class, 'show']);
+    Route::delete( '{id}', [StaysController::class, 'destroy']);
 });
 
 Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
