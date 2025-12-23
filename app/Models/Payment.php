@@ -12,7 +12,7 @@ class Payment extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
-        'bookingID',
+        'bookingItemID',
         'amount',
         'paymentDate',
         'paymentMethod',

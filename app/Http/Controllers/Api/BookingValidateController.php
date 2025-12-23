@@ -12,16 +12,16 @@ class BookingValidateController extends Controller
     //
     public function updateStatus(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'status' => [
-                'required',
-                Rule::in([
-                    Booking::STATUS_CONFIRMED,
-                    Booking::STATUS_CONFIRMED_MODIFIED,
-                    Booking::STATUS_CANCELLED,
-                    Booking::STATUS_PENDING
-                ])
-            ]
-        ]);
+        // $validated = $request->validate([
+        //     'status' => [
+        //         'required',
+        //         Rule::in([
+        //             Booking::STATUS_CONFIRMED,
+        //             Booking::STATUS_CONFIRMED_MODIFIED,
+        //             Booking::STATUS_CANCELLED,
+        //             Booking::STATUS_PENDING
+        //         ])
+        //     ]
+        // ]);
     }
 }

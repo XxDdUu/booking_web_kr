@@ -8,12 +8,16 @@ class Booking extends Model
 {
     public $table = 'bookings';
     public $incrementing = false;
-    const STATUS_CONFIRMED = 'confirmed';
-    const STATUS_CANCELLED = 'canceled';
-    const STATUS_CONFIRMED_MODIFIED = 'confirmed modified';
-    const STATUS_PENDING = 'pending';
+    // const STATUS_CONFIRMED = 'confirmed';
+    // const STATUS_CANCELLED = 'canceled';
+    // const STATUS_CONFIRMED_MODIFIED = 'confirmed modified';
+    // const STATUS_PENDING = 'pending';
 
-    protected $fillable = ['userID', 'serviceID', 'status'];
+    protected $fillable = [
+        'userID',
+        'serviceID',
+        // 'status'
+    ];
 
     protected static function boot(): void
     {

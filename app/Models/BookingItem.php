@@ -17,7 +17,12 @@ class BookingItem extends Model
         'serviceType',
         'quantity',
         'subtotal',
+        'status',
         'metaJson'
+    ];
+
+    protected $casts = [
+        "metaJson"=>"array"
     ];
     protected static function boot(): void
     {

@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Str;
 use App\Repositories\TokenRepository;
 use Log;
+
 class TokenService
 {
     protected TokenRepository $tokenRepo;
@@ -40,6 +41,11 @@ class TokenService
     {
         if (!$header) return null;
         return str_replace("Bearer ", "", $header);
+        // if (!str_starts_with($header, 'Bearer ')) {
+        //     return null;
+        // }
+
+        // return trim(substr($header, 7));
     }
 
     // Lấy user từ bất kỳ token nào
@@ -51,7 +57,11 @@ class TokenService
         $user = $this->tokenRepo->getUserByTempToken($token);
         if ($user) return $user;
         // 2. Search in remember tokens (DB)
-        $hashed = hash('sha256', $token);
+        $hashed = hash('sha256', trim($token));
+
+        Log::info('TOKEN RAW', ['token' => $token]);
+        Log::info('TOKEN HASH', ['hash' => $hashed]);
+
         return $this->tokenRepo->getUserByRememberToken($hashed);
     }
 }

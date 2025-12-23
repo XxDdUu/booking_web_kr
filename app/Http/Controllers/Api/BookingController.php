@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Booking;
-use App\Models\BookingItem;
-use App\Models\Payment;
 use App\Services\BookingService;
 use App\Services\TokenService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Log;
 
 class BookingController extends Controller
 {
@@ -24,30 +21,38 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        // Lấy user từ token
+        \Log::info('AUTH HEADER', [
+            'authorization' => $request->header('Authorization')
+        ]);
+
         $token = $this->tokenService->extractToken(
             $request->header('Authorization')
         );
+        \Log::info("Token", ["token" => $token]);
+
         $user = $this->tokenService->getUserFromToken($token);
+        \Log::info("User", ["user" => $user]);
 
         if (!$user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
 
-        // Validate
         $request->validate([
             'items' => 'required|array|min:1',
             'paymentMethod' => 'required|in:stay,qr,card',
         ]);
 
         try {
-            $createBooking = $this->bookingService->createBookingAfterClick($user, $request);
-            return response()->json([
-                'booking' => $createBooking['booking'],
-                'bookingItem' => $createBooking['bookingItem'],
-            ]);
+            $result = $this->bookingService
+                ->createBookingAfterClick($user, $request);
+
+            return response()->json($result);
         } catch (\Throwable $e) {
-            return response()->json(['error' => 'Booking failed'], 500);
+            return response()->json([
+                'error' => 'Booking failed',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
         }
     }
 }
