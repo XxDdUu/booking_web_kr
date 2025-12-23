@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Services\Admin\AdminLocationService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Log;
@@ -31,7 +32,7 @@ class AdminLocationController extends Controller
             'address' => 'required|string',
             'country' => 'required|string',
             'pinCode' => 'required|string',
-            'image' => 'nullable|file|image|max:2048',
+            'image' => 'nullable|file|image|max:20480',
         ]);
 
         $location = $this->service->createLocation($validated);
@@ -49,7 +50,7 @@ class AdminLocationController extends Controller
             'address' => 'nullable|string',
             'country' => 'nullable|string',
             'pinCode' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpg,jpeg,png,webp,svg|max:2048',
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,webp,svg|max:20480',
             'existing_image_path' => 'nullable|string',
         ]);
         $locationID = $request->route('id');    
@@ -61,5 +62,14 @@ class AdminLocationController extends Controller
             'data' => $location
         ], 201);
 
+    }
+    public function delete(string $locationID) 
+    {
+        $location = $this->service->deleteLocation($locationID);
+
+        return response()->json([
+            'message' => 'Location deleted successfully',
+            'data' => $location
+        ], 200);
     }
 }

@@ -19,7 +19,9 @@ class AttractionsSeeder extends Seeder
         $attractions = require database_path('data/attractions.php');
 
         $daNang = Location::where('locationName', 'like', '%Đà Nẵng%')->first();
-        $attService   = Service::where('serviceType', 'like', '%attraction%')->first();
+        $attService   = Service::create([
+            'serviceType' => 'attraction'
+        ]);
 
         $tour = Category::where('categoryName', 'like', '%tour%')->first();
         $museum = Category::where('categoryName', 'like', '%bảo tàng%')->first();

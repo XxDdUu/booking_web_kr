@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Stay;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Services\StayService;
+use Storage;
 
 class StaysResultsController extends Controller
 {
@@ -73,7 +74,8 @@ class StaysResultsController extends Controller
             $stays = DB::table('stays')
                 ->select('stayName', 'location', 'address', 'rating', 'price', 'image')
                 ->get();
-            return response()->json($stays);
+            return response()->json(
+                $stays);
         } catch (Exception $e) {
             return response()->json([
                 'error:' => true,
