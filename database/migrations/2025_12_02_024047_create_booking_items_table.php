@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('booking_items', function (Blueprint $table) {
-            $table->string('bookingItemID',255);
+        Schema::create('bookingItems', function (Blueprint $table) {
+            $table->string('bookingItemID', 255)->primary();
 
             // Khóa ngoại liên kết với bảng bookings
             // onDelete('cascade') giúp xóa item nếu booking bị xóa
@@ -25,7 +25,7 @@ return new class extends Migration
 
             // ID của dịch vụ (ID khách sạn, ID xe, ID vé tham quan...)
             // Index cụm (service_type + service_id) giúp query nhanh hơn
-            $table->string('serviceID',255);
+            $table->string('serviceID', 255);
             $table->foreign('serviceID')
                 ->references('serviceID')
                 ->on('services')
@@ -33,15 +33,17 @@ return new class extends Migration
                 ->onUpdate('cascade');
 
             // ENUM cho loại dịch vụ
-            $table->enum('serviceType', ['stay', 'car', 'attraction']);
+            // $table->enum('serviceType', ['stay', 'car', 'attraction']);
+            $table->string('serviceType', 50);
 
             $table->integer('quantity')->default(1);
 
             // Dùng Decimal cho tiền tệ để tránh lỗi làm tròn số thực (floating point)
             // 15 số, 2 số thập phân
-            $table->decimal('subtotal', 20, 2);
-            $table->string('paymentStatus',255)->default('pending');
-
+            $table->decimal('subtotal', 20, 2)->nullable();
+            $table->string('status', 255)
+                ->default('pending')
+                ->comment('pending, confirmed, cancelled, confirmed modified');
             // Cột Meta dạng JSON, cho phép NULL nếu không có dữ liệu thêm
             $table->json('metaJson')->nullable();
 
