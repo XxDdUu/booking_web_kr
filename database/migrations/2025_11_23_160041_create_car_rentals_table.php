@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('carRentals', function (Blueprint $table) {
             $table->string('carRentalID',255)->primary();
 
-            $table->string('serviceID',255);
+            $table->string('serviceID',255)->unique();
             $table->foreign('serviceID')
                 ->references('serviceID')
                 ->on('services')

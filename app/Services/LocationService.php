@@ -11,15 +11,6 @@ class LocationService
         protected LocationRepository $locationRepository
     ) {} 
 
-    public function searchLocationKeywords(string $q): Collection
-    {
-        if (strlen($q) < 2) {
-            return collect();
-        }
-
-        return $this->locationRepository
-            ->searchNamesByKeyword($q);
-    }
     public function getHomepageLocations(): Collection
     {
         return $this->locationRepository->getHomepageLocations(5);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attractions', function (Blueprint $table) {
             $table->string('attractionID', 255)->primary();
 
-            $table->string('serviceID', 255);
+            $table->string('serviceID', 255)->unique();
             $table->foreign('serviceID')
                 ->references('serviceID')       // Tên cột khóa chính bên bảng hotel_categories
                 ->on('services')

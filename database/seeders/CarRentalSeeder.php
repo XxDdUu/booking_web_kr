@@ -20,9 +20,11 @@ class CarRentalSeeder extends Seeder
         $carRentals = require database_path('data/carRentals.php');
 
         foreach ($carRentals as $item) {
+            $serviceID = self::getCarServiceID();
+
             CarRental::create([
                 'locationID' => self::getCarLocationID($item['checkInDestination']),
-                'serviceID' => self::getCarServiceID(),
+                'serviceID' => $serviceID,
                 'carID' => self::getCarID($item['carName']),
                 ...$item
             ]);

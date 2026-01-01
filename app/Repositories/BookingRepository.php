@@ -32,10 +32,6 @@ class BookingRepository
 
     public function createPayment(BookingItem $bookingItem, float|int $totalAmount, $request): ?Payment
     {
-        \Log::info('PAYMENT DEBUG', [
-            'bookingItemID' => $bookingItem->bookingItemID ?? null
-        ]);
-
         return Payment::create([
             'bookingItemID' => $bookingItem->bookingItemID,
             'amount' => $totalAmount,

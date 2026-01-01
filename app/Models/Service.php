@@ -33,10 +33,29 @@ class Service extends Model
             random_int(1000, 9999)
         );
     }
-    public function stays()
+    public function location() {
+        return $this->belongsTo(Location::class);
+    }
+    public function stay()
     {
-        return $this->hasMany(
+        return $this->hasOne(
             Stay::class,
+            'serviceID',
+            'serviceID'
+        );
+    }   
+    public function attraction() 
+    {
+        return $this->hasOne(
+            Attraction::class,
+            'serviceID',
+            'serviceID'
+        );
+    }
+    public function carRental() 
+    {
+        return $this->hasOne(
+            CarRental::class,
             'serviceID',
             'serviceID'
         );
@@ -45,4 +64,5 @@ class Service extends Model
     {
         return $this->hasMany(Review::class, 'serviceID', 'serviceID');
     }
+    
 }

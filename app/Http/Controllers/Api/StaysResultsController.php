@@ -16,7 +16,7 @@ class StaysResultsController extends Controller
     public function searchingResults(Request $request)
     {
         try {
-            $loc      = $request->query('location');
+            $loc      = $request->query('query');
             $checkIn  = $request->query('checkin');
             $checkOut = $request->query('checkout');
 
@@ -33,8 +33,8 @@ class StaysResultsController extends Controller
 
             // 1. Query stays theo location
             $stays = DB::table('stays')
-                ->select('stayID', 'stayName', 'location', 'address', 'rating', 'price', 'image')
-                ->whereRaw('location LIKE BINARY ?', ["%$loc%"])
+                ->select('stayID', 'stayName', 'address', 'rating', 'price', 'image')
+                ->whereRaw('address LIKE BINARY ?', ["%$loc%"])
                 ->get()
                 ->map(function ($stay) {
                     // Ép kiểu về dạng number đúng chuẩn
@@ -72,7 +72,7 @@ class StaysResultsController extends Controller
     {
         try {
             $stays = DB::table('stays')
-                ->select('stayName', 'location', 'address', 'rating', 'price', 'image')
+                ->select('stayName', 'address', 'rating', 'price', 'image')
                 ->get();
             return response()->json(
                 $stays);

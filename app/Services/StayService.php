@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-use App\Repositories\StayRepository;
+use App\Repositories\Stay\StayRepository;
 use App\Repositories\ReviewRepository;
 use Illuminate\Support\Collection;
 

@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\DB;
+use App\Repositories\Stay\StayRepository;
+use App\Repositories\Stay\StayRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Jetstream\Jetstream;
 use App\Models\Review;
 use App\Observers\ReviewObserver;
 
@@ -15,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {   
-
+        $this->app->bind(
+            StayRepositoryInterface::class,
+            StayRepository::class
+        );
     }
 
     /**

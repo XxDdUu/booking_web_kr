@@ -20,9 +20,7 @@ class StaysSeeder extends Seeder
 
         $daNang = Location::where('locationName', 'like', '%Đà Nẵng%')->first();
         $hotelCategory = Category::where('categoryName', 'like', '%hotel%')->first();
-        $service = Service::create([
-            'serviceType' => 'stay'
-        ]);
+
 
         foreach ($stays as $item) {
 
