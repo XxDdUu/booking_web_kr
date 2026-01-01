@@ -14,27 +14,6 @@ class LocationController extends Controller
     public function __construct(
         protected LocationService $service
     ) {}
-    public function getKeywords(Request $request)
-    {
-        try {
-            $q = $request->query('q');
-
-            if (!$q) {
-                return response()->json([]);
-            }
-
-            return response()->json([
-                'keywords' => $this->service->searchLocationKeywords($q) 
-            ]);
-        } catch (\Exception $e) {
-            // debug
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ], 500);
-        }
-    }
     public function homepage(LocationService $service)
     {
         return response()->json([

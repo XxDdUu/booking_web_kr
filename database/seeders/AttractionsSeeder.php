@@ -19,9 +19,6 @@ class AttractionsSeeder extends Seeder
         $attractions = require database_path('data/attractions.php');
 
         $daNang = Location::where('locationName', 'like', '%Đà Nẵng%')->first();
-        $attService   = Service::create([
-            'serviceType' => 'attraction'
-        ]);
 
         $tour = Category::where('categoryName', 'like', '%tour%')->first();
         $museum = Category::where('categoryName', 'like', '%bảo tàng%')->first();
@@ -40,6 +37,10 @@ class AttractionsSeeder extends Seeder
         ];
 
         foreach ($attractions as $item) {
+            $attService   = Service::create([
+                'serviceType' => 'attraction'
+            ]);
+
             Attraction::create([
                 'locationID' => $daNang->locationID,
                 'categoryID' => $categoryMap[$item['category']],

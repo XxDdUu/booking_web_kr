@@ -22,4 +22,7 @@ class StaysController extends Controller
             $this->service->getStayById($id)
         );
     }
+    public function destroy()  {
+        
+    }
 }

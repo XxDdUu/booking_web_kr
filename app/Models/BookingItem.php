@@ -17,7 +17,12 @@ class BookingItem extends Model
         'serviceType',
         'quantity',
         'subtotal',
+        'status',
         'metaJson'
+    ];
+
+    protected $casts = [
+        "metaJson"=>"array"
     ];
     protected static function boot(): void
     {
@@ -28,7 +33,7 @@ class BookingItem extends Model
             };
         });
     }
-    public static function generateBkgItemID(string $prefix): string
+    public static function generateBookingItemID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',

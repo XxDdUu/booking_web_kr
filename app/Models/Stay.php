@@ -5,17 +5,16 @@ use Storage;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Room;
 use Str;
-
 class Stay extends Model
 {
     protected $table = 'stays';
     protected $primaryKey = 'stayID';
-    public $incrementing = false; // vì PK là VARCHAR
+    public $incrementing = false; 
     protected $keyType = 'string';
     protected $casts = [
         'image' => 'array',
         'price' => 'decimal:2',
-        'rate'  => 'decimal:1',
+        'rating'  => 'decimal:1',
     ];
     protected $appends = ['image_urls'];
 
@@ -70,5 +69,16 @@ class Stay extends Model
     }
     public function category() {
         return $this->belongsTo(Category::class, 'categoryID', 'categoryID');
+    }
+    public function reviews()
+    {
+        return $this->hasManyThrough(
+            Review::class,
+            Service::class,
+            'serviceID',
+            'serviceID',
+            'serviceID',
+            'serviceID'
+        );
     }
 }
