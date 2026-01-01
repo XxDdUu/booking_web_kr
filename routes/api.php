@@ -79,4 +79,4 @@ Route::prefix('staff')->group(function () {
 
 Route::post('/bookings',[BookingController::class,'store']);
 route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
-
+Route::get('/keyword',[LocationController::class,'getKeywords']);
