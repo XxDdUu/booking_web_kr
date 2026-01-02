@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('bookingItems', function (Blueprint $table) {
             $table->string('bookingItemID', 255)->primary();
 
-            // Khóa ngoại liên kết với bảng bookings
-            // onDelete('cascade') giúp xóa item nếu booking bị xóa
+
             $table->string('bookingID', 255);
             $table->foreign('bookingID')
                 ->references('bookingID')
@@ -23,14 +22,14 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // ID của dịch vụ (ID khách sạn, ID xe, ID vé tham quan...)
-            // Index cụm (service_type + service_id) giúp query nhanh hơn
             $table->string('serviceID', 255);
             $table->foreign('serviceID')
                 ->references('serviceID')
                 ->on('services')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->date('check_in')->nullable();
+            $table->date('check_out')->nullable();
 
             // ENUM cho loại dịch vụ
             // $table->enum('serviceType', ['stay', 'car', 'attraction']);
@@ -38,19 +37,14 @@ return new class extends Migration
 
             $table->integer('quantity')->default(1);
 
-            // Dùng Decimal cho tiền tệ để tránh lỗi làm tròn số thực (floating point)
-            // 15 số, 2 số thập phân
             $table->decimal('subtotal', 20, 2)->nullable();
             $table->string('status', 255)
                 ->default('pending')
                 ->comment('pending, confirmed, cancelled, confirmed modified');
-            // Cột Meta dạng JSON, cho phép NULL nếu không có dữ liệu thêm
             $table->json('metaJson')->nullable();
 
             $table->timestamps();
 
-            // Đánh index để tối ưu hiệu suất tìm kiếm
-            // $table->index(['serviceType', 'serviceID']);
         });
     }
 

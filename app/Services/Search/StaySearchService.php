@@ -4,7 +4,7 @@ namespace App\Services\Search;
 
 use App\Repositories\Stay\StayRepositoryInterface;
 use Carbon\Carbon;
-
+use Log;
 class StaySearchService
 {
     public function __construct(
@@ -12,7 +12,7 @@ class StaySearchService
     ) {}
     public function search(?string $location, ?string $checkIn, ?string $checkOut)
     {
-        $stays = $this->stayRepo->findByLocationName($location);
+        $stays = $this->stayRepo->queryByLocationName($location);
 
         $days = null;
 
@@ -20,10 +20,9 @@ class StaySearchService
             $days = Carbon::parse($checkIn)
                 ->diffInDays(Carbon::parse($checkOut));
 
-            $stays->transform(function ($stay) use ($days) {
-                $stay->days = $days;
-                $stay->totalPrice = $stay->price * $days;
-                return $stay;
+                $stays->whereHas('rooms', function ($roomQuery) use ($checkIn, $checkOut) {
+                    $roomQuery->availableBetween($checkIn, $checkOut);
+                Log::info($roomQuery->all());
             });
         }
 

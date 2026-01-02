@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories\Stay;
+use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\Stay;
 use Illuminate\Support\Collection;
@@ -25,7 +26,7 @@ class StayRepository implements StayRepositoryInterface
             ->limit($limit)
             ->get();
     }
-    public function findByLocationName(?string $location): Collection
+    public function queryByLocationName(?string $location): Builder
     {
         return Stay::query()
             ->with('location')
@@ -42,9 +43,9 @@ class StayRepository implements StayRepositoryInterface
                 $query->whereHas('location', function ($q) use ($location) {
                     $q->where('locationName', 'LIKE', "%{$location}%");
                 });
-            })
-            ->get();
+            });
     }
+
     public function getStaysForCard(int $limit = 10): Collection
     {
         return Stay::query()

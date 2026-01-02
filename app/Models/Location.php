@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Str;
+use Storage;
 class Location extends Model
 {
     protected $table = 'locations';
@@ -19,6 +20,8 @@ class Location extends Model
         'pinCode',
         'location_image_path',
     ];
+    protected $appends = ['image_url'];
+
     protected static function boot(): void
     {
         parent::boot();
@@ -53,6 +56,16 @@ class Location extends Model
             'LIKE BINARY',
             "%{$keyword}%"
         );
+    }
+    public function getImageUrlAttribute(): ?string
+    {
+        $path = $this->location_image_path;
+
+        if (! $path) return null;
+
+        return Str::startsWith($path, ['http://', 'https://'])
+            ? $path
+            : Storage::url($path);
     }
 
 }

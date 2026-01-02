@@ -30,7 +30,7 @@ class AdminLocationService
 
                 'location_image_path' => $location->location_image_path,
 
-                'image_url' => Storage::url($location->location_image_path),
+                'image_url' => $location->image_url,
             ];
         });
 
