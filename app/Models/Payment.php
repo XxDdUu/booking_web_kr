@@ -8,7 +8,7 @@ class Payment extends Model
 {
     protected $table = 'payments';
     protected $primaryKey = 'paymentID';
-    public $incrementing = false; // vì PK là VARCHAR
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [

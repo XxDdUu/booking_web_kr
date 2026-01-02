@@ -1,5 +1,10 @@
 FROM php:8.2-fpm
 
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd -g ${GID} appuser \
+ && useradd -u ${UID} -g appuser -m appuser
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git unzip curl libpng-dev libjpeg62-turbo-dev libfreetype6-dev \

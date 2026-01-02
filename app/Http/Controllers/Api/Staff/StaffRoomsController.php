@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\Staff;
 
 use Illuminate\Http\Request;
-use App\Services\Staff\StaffStayService;
+use App\Services\Staff\StaffRoomService;
 use App\Http\Controllers\Controller;
 use App\Services\TokenService;
 use Log;
-class StaffStaysController extends Controller
+class StaffRoomsController extends Controller
 {
     public function __construct(
-        protected StaffStayService $service,
+        protected StaffRoomService $service,
         protected TokenService $tokenService
     ) {}
 
@@ -30,12 +30,12 @@ class StaffStaysController extends Controller
             ], 403);
         }
         $validated = $request->validate([
-            'locationID' => 'required|exists:locations,locationID',
-            'categoryID' => 'required|exists:categories,categoryID',
+            'stayID' => 'required|exists:stays,stayID',
+            'roomTypeID' => 'required|exists:roomTypes,roomTypeID',
 
-            'stayName'   => 'required|string|max:128',
+            'roomName'   => 'required|string|max:128',
             'description'=> 'nullable|string',
-            'address'    => 'nullable|string',
+            'quantity'    => 'required|numeric|min:1',
 
             'price'      => 'required|numeric|min:0',
             'rate'       => 'nullable|numeric|min:0|max:5',

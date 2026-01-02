@@ -3,7 +3,6 @@
 namespace App\Models;
 use Storage;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Room;
 use Str;
 class Stay extends Model
 {
@@ -55,11 +54,15 @@ class Stay extends Model
             random_int(1000, 9999)
         );
     }
-    public function getImageUrlsAttribute(): array
+    public function getImageUrlsAttribute(): ?array
     {
-        return collect($this->image)->map(
-            fn ($img) => Storage::url($img)
-        )->toArray();
+        return collect($this->image)
+            ->map(fn ($img) =>
+                Str::startsWith($img, ['http://', 'https://'])
+                    ? $img
+                    : Storage::url($img)
+            )
+            ->toArray();
     }
     public function location() {
         return $this->belongsTo(Location::class, 'locationID', 'locationID');

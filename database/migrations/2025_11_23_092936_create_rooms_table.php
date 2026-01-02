@@ -27,12 +27,13 @@ return new class extends Migration
                 ->on('roomTypes')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
+            
             $table->string('roomName',255)->nullable();
             $table->string('description',255)->nullable();
             $table->tinyInteger('quantity',false,true)->nullable();
+            $table->unsignedTinyInteger('capacity')->nullable(); 
             $table->decimal('currentPrice',15,2)->nullable();
-            $table->string('availability',50)->nullable();
+            $table->json('image')->nullable();
             
             $table->timestamps();
         });
