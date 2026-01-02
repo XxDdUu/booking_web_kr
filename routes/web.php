@@ -11,9 +11,9 @@ Route::get('/', function () {
         'status' => 'OK' 
     ]);
 });
-Route::get('/verify-email', EmailVerificationPromptController::class)
-    ->middleware(['auth'])
-    ->name('verification.notice');
+// Route::get('/verify-email', EmailVerificationPromptController::class)
+//     ->middleware(['auth'])
+//     ->name('verification.notice');
 
 Route::get('/test_s3', function ()  {
     try {

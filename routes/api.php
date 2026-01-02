@@ -16,7 +16,6 @@ use App\Http\Controllers\Api\Admin\AdminLocationController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
-use App\Http\Controllers\Api\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
@@ -82,5 +81,5 @@ Route::prefix('staff')->group(function () {
 });
 
 Route::post('/bookings',[BookingController::class,'store']);
-route::post('/payment/confirm',[ControllersPaymentController::class,'confirm']);
-Route::get('/keyword',[LocationController::class,'getKeywords']);
+route::post('/payment/confirm',[PaymentController::class,'confirm']);
+Route::get('/keywords',[LocationController::class,'keywords']);
