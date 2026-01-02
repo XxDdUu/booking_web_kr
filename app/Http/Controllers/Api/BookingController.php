@@ -21,17 +21,12 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        \Log::info('AUTH HEADER', [
-            'authorization' => $request->header('Authorization')
-        ]);
 
         $token = $this->tokenService->extractToken(
             $request->header('Authorization')
         );
-        \Log::info("Token", ["token" => $token]);
 
         $user = $this->tokenService->getUserFromToken($token);
-        \Log::info("User", ["user" => $user]);
 
         if (!$user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
@@ -44,7 +39,7 @@ class BookingController extends Controller
 
         try {
             $result = $this->bookingService
-                ->createBookingAfterClick($user, $request);
+                ->createBooking($user, $request);
 
             return response()->json($result);
         } catch (\Throwable $e) {
