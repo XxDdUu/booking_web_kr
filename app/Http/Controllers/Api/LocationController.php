@@ -20,4 +20,14 @@ class LocationController extends Controller
             'locations' => $service->getHomepageLocations()
         ]);
     }
+    public function keywords(Request $request, LocationService $service)
+    {
+        $keyword = $request->query('q', '');
+
+        $getKeyWords = $service->getLocationKeyWord($keyword);
+
+        return response()->json(
+            $getKeyWords->pluck('locationName')->toArray()
+        );
+    }
 }
