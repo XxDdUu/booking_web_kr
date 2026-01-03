@@ -17,11 +17,4 @@ class LocationService
         return $this->locationRepository->getHomepageLocations(5);
     }
 
-    public function getLocationKeyWord(string $keyword): Collection
-    {
-        return $this->locationRepository->getLocationKeyWords(
-            10,
-            $keyword
-        );
-    }
 }

@@ -21,18 +21,4 @@ class LocationRepository
             ->get();
     }
 
-    public function getLocationKeyWords(int $limit = 10, ?string $keyword): Collection
-    {
-        return Location::query()
-            ->select([
-                'locationID',
-                'locationName'
-            ])
-            ->when($keyword, function($query) use ($keyword){
-                $search = '%'.Str::lower($keyword).'%';
-                $query->where('locationName', 'LIKE', $search);
-            })
-            ->limit($limit)
-            ->get();
-    }
 }
