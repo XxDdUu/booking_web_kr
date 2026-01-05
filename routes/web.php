@@ -11,9 +11,9 @@ Route::get('/', function () {
         'status' => 'OK' 
     ]);
 });
-Route::get('/verify-email', EmailVerificationPromptController::class)
-    ->middleware(['auth'])
-    ->name('verification.notice');
+// Route::get('/verify-email', EmailVerificationPromptController::class)
+//     ->middleware(['auth'])
+//     ->name('verification.notice');
 
 Route::get('/test_s3', function ()  {
     try {
@@ -24,6 +24,10 @@ Route::get('/test_s3', function ()  {
     } catch (Exception $e) {
         return 'S3 Test: Error - ' . $e->getMessage();
     }
+});
+
+Route::get('/test-env', function() {
+    return env('APP_KEY');
 });
 
 require __DIR__.'/settings.php';

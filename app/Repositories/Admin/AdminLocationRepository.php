@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Repositories\Admin;
+
+use App\Models\Location;
+use Illuminate\Database\Eloquent\Collection;
+
+class AdminLocationRepository
+{
+    public function create(array $data): Location
+    {
+        return Location::create($data);
+    }
+    public function update(string $locationID, array $data): Location
+    {
+        $location = Location::findOrFail($locationID);
+        if (! $location) {
+            throw new \Exception("Location not found");
+        }
+        $location->update($data);
+        return $location;
+    }
+    public function getAll()
+    {
+        return Location::orderBy('created_at', 'desc')->get();
+    }
+    public function paginate(int $perPage = 10)
+    {
+        return Location::orderBy('created_at', 'desc')->paginate($perPage);
+    }
+    public function getForStayForm(): Collection {
+        return Location::query()
+            ->select('locationID', 'locationName')
+            ->orderBy('locationName')
+            ->get();
+    }
+    public function delete(string $locationID)
+    {
+        $location = Location::find($locationID);
+        if (!$location) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Location not found'
+            ], 404);
+        }
+
+        $location->delete();
+
+        return response()->json([
+            'ok' => true,
+            'message' => 'Location deleted successfully'
+        ], 200);
+    }
+}

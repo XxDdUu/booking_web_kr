@@ -8,7 +8,7 @@ class Service extends Model
 {
     //
     protected $table = 'services';
-    protected $primaryKey = 'serviceId';
+    protected $primaryKey = 'serviceID';
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
@@ -19,11 +19,11 @@ class Service extends Model
         parent::boot();
         static::creating(function ($service) {
             if (empty($service->serviceID)) {
-                $service->serviceID = self::generateStayID('SV');
+                $service->serviceID = self::generateServiceID('SV');
             };
         });
     }
-    public static function generateStayID(string $prefix): string
+    public static function generateServiceID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',
@@ -33,4 +33,36 @@ class Service extends Model
             random_int(1000, 9999)
         );
     }
+    public function location() {
+        return $this->belongsTo(Location::class);
+    }
+    public function stay()
+    {
+        return $this->hasOne(
+            Stay::class,
+            'serviceID',
+            'serviceID'
+        );
+    }   
+    public function attraction() 
+    {
+        return $this->hasOne(
+            Attraction::class,
+            'serviceID',
+            'serviceID'
+        );
+    }
+    public function carRental() 
+    {
+        return $this->hasOne(
+            CarRental::class,
+            'serviceID',
+            'serviceID'
+        );
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'serviceID', 'serviceID');
+    }
+    
 }

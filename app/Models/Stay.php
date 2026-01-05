@@ -1,26 +1,29 @@
 <?php
 
 namespace App\Models;
-
+use Storage;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Room;
-
+use Str;
 class Stay extends Model
 {
     protected $table = 'stays';
     protected $primaryKey = 'stayID';
-    public $incrementing = false; // vì PK là VARCHAR
+    public $incrementing = false; 
     protected $keyType = 'string';
+    protected $casts = [
+        'image' => 'array',
+        'price' => 'decimal:2',
+        'rating'  => 'decimal:1',
+    ];
+    protected $appends = ['image_urls'];
+
 
     protected $fillable = [
         'locationID',
         'categoryID',
         'serviceID',
         'stayName',
-        // 'checkIn',
-        // 'checkOut',
         'description',
-        'location',
         'rate', 
         'address',
         'image',
@@ -34,10 +37,11 @@ class Stay extends Model
     protected static function boot(): void
     {
         parent::boot();
+
         static::creating(function ($stay) {
             if (empty($stay->stayID)) {
-                $stay->stayID = self::generateStayID('STAY');
-            };
+                $stay->stayID = 'STAY-' . Str::uuid();
+            }
         });
     }
     public static function generateStayID(string $prefix): string
@@ -48,6 +52,36 @@ class Stay extends Model
             random_int(10, 99),
             random_int(10, 99),
             random_int(1000, 9999)
+        );
+    }
+    public function getImageUrlsAttribute(): ?array
+    {
+        return collect($this->image)
+            ->map(fn ($img) =>
+                Str::startsWith($img, ['http://', 'https://'])
+                    ? $img
+                    : Storage::url($img)
+            )
+            ->toArray();
+    }
+    public function location() {
+        return $this->belongsTo(Location::class, 'locationID', 'locationID');
+    }
+    public function service() {
+        return $this->belongsTo(Service::class, 'serviceID', 'serviceID');
+    }
+    public function category() {
+        return $this->belongsTo(Category::class, 'categoryID', 'categoryID');
+    }
+    public function reviews()
+    {
+        return $this->hasManyThrough(
+            Review::class,
+            Service::class,
+            'serviceID',
+            'serviceID',
+            'serviceID',
+            'serviceID'
         );
     }
 }

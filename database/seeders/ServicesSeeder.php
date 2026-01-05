@@ -13,9 +13,5 @@ class ServicesSeeder extends Seeder
      */
     public function run(): void
     {
-        $services = ['car','attraction','stay'];
-        foreach($services as $type){
-            Service::create(['serviceType'=>$type]);
-        };
     }
 }

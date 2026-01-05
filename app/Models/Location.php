@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Str;
+use Storage;
 class Location extends Model
 {
     protected $table = 'locations';
@@ -17,18 +18,20 @@ class Location extends Model
         'address',
         'country',
         'pinCode',
-        'image'
+        'location_image_path',
     ];
+    protected $appends = ['image_url'];
+
     protected static function boot(): void
     {
         parent::boot();
         static::creating(function ($location) {
             if (empty($location->locationID)) {
-                $location->locationID = self::generateStayID('LOC');
+                $location->locationID = self::generateLocationID('LOC');
             };
         });
     }
-    public static function generateStayID(string $prefix): string
+    public static function generateLocationID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',
@@ -38,4 +41,31 @@ class Location extends Model
             random_int(1000, 9999)
         );
     }
+    public function stays()
+    {
+        return $this->hasMany(
+            Stay::class,
+            'locationID',
+            'locationID'
+        );
+    }
+    public function scopeNameLikeBinary($query, string $keyword)
+    {
+        return $query->where(
+            'locationName',
+            'LIKE BINARY',
+            "%{$keyword}%"
+        );
+    }
+    public function getImageUrlAttribute(): ?string
+    {
+        $path = $this->location_image_path;
+
+        if (! $path) return null;
+
+        return Str::startsWith($path, ['http://', 'https://'])
+            ? $path
+            : Storage::url($path);
+    }
+
 }

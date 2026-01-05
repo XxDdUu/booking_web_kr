@@ -84,6 +84,8 @@ class User extends Authenticatable
             ? Storage::url($this->avatar_path)
             : null;
     }
-
+    public function bookings() {
+        return $this->hasMany(Booking::class, 'userID', 'id');
+    }
 
 }

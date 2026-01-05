@@ -18,11 +18,11 @@ class Category extends Model
         parent::boot();
         static::creating(function ($category) {
             if (empty($category->categoryID)) {
-                $category->categoryID = self::generateStayID('CATE');
+                $category->categoryID = self::generateCategoryID('CATE');
             };
         });
     }
-    public static function generateStayID(string $prefix): string
+    public static function generateCategoryID(string $prefix): string
     {
         return sprintf(
             '%s-%02d-%02d-%04d',
@@ -30,6 +30,14 @@ class Category extends Model
             random_int(10, 99),
             random_int(10, 99),
             random_int(1000, 9999)
+        );
+    }
+    public function stays()
+    {
+        return $this->hasMany(
+            Stay::class,
+            'categoryID',
+            'categoryID'
         );
     }
 }
