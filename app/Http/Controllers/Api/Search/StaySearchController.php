@@ -17,7 +17,7 @@ class StaySearchController extends Controller
     {
         return response()->json(
             $this->service->search(
-                $request->query('query'),
+                $request->query('q'),
                 $request->query('checkin'),
                 $request->query('checkout')
             )

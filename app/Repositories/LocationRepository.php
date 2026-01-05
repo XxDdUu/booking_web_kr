@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Location;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class LocationRepository
 {
@@ -19,4 +20,5 @@ class LocationRepository
             ->limit($limit)
             ->get();
     }
+
 }
