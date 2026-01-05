@@ -43,11 +43,11 @@ class StaffRoomsController extends Controller
             'image'      => 'nullable|array',
             'image.*'    => 'nullable|string',
         ]);
-        $stay = $this->service->createStay($validated);
+        $room = $this->service->createRoom($validated['stayID'], $validated);
 
         return response()->json([
             'ok'   => true,
-            'data' => $stay
+            'data' => $room
         ], 201);
     }
 }

@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
             StaysSeeder::class,
             AttractionsSeeder::class,
             CarsSeeder::class,
-            CarRentalSeeder::class
+            CarRentalSeeder::class,
+            RoomTypeSeeder::class
         ]);
     }
 }

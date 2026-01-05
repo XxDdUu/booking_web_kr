@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Stay;
 
 use App\Http\Resources\ReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;

@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\CarsResultsController;
 use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\StaysController;
-use App\Http\Controllers\Api\StaysResultsController;
+use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\Search\StaySearchController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\UserController;
@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\PaymentController as ControllersPaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
+use App\Http\Controllers\Api\Staff\StaffRoomFormController;
 
 
 Route::prefix('auth')->group(function () {
@@ -57,6 +58,8 @@ Route::prefix('stays')->group(function () {
     Route::get('/', [StaysController::class, 'index']);
     Route::get('{id}', [StaysController::class, 'show']);
     Route::delete( '{id}', [StaysController::class, 'destroy']);
+
+    Route::get('/{id}/rooms', [RoomController::class, 'index']);
 });
 
 Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
@@ -79,6 +82,7 @@ Route::prefix('home')->group(function () {
 Route::prefix('staff')->group(function () {
     Route::post('/stays', [StaffStaysController::class, 'store']);
     Route::get('/stay-form', [StaffStayFormController::class, 'getFormData']);
+    Route::get('/room-form', [StaffRoomFormController::class, 'getFormData']);
 });
 
 Route::post('/bookings',[BookingController::class,'store']);

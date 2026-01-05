@@ -12,7 +12,7 @@ class StayRepository implements StayRepositoryInterface
     public function suggest(string $keyword, int $limit = 8): Collection
     {
         return Stay::query()
-            ->select(['stayName', 'locationID'])
+            ->select(['stayID', 'stayName', 'address','locationID'])
             ->where(function ($q) use ($keyword) {
                 $q->where('stayName', 'LIKE', "%{$keyword}%")
                   ->orWhere('address', 'LIKE', "%{$keyword}%")

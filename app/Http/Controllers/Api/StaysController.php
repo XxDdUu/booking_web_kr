@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\StayService;
-use App\Http\Resources\StayHomeResource;
-use App\Http\Resources\StayDetailsResource;
+use App\Http\Resources\Stay\StayHomeResource;
+use App\Http\Resources\Stay\StayDetailsResource;
 class StaysController extends Controller
 {
     public function __construct(

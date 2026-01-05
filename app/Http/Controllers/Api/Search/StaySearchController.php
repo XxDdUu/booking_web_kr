@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Search;
 
 use App\Http\Controllers\Controller;
 use App\Services\Search\StaySearchService;
-use App\Http\Resources\StaySuggestResource;
+use App\Http\Resources\Stay\StaySuggestResource;
 use Illuminate\Http\Request;
 use Log;
 

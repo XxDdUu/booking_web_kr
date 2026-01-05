@@ -22,7 +22,6 @@ class StaySearchService
 
                 $stays->whereHas('rooms', function ($roomQuery) use ($checkIn, $checkOut) {
                     $roomQuery->availableBetween($checkIn, $checkOut);
-                Log::info($roomQuery->all());
             });
         }
 
