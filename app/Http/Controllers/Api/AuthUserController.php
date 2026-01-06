@@ -24,26 +24,22 @@ class AuthUserController extends Controller
     public function me(Request $request)
     {
         try {
-            \Log::info('auth/me start');
             $header = $request->header('Authorization');
             if (!$header) {
                 return response()->json(['user' => null], 200);
             }
-            \Log::info('auth/me after request headers');
             $token = $this->tokenService->extractToken($header);
             if (!$token) {
                 return response()->json(['token' => null], 200);
             }
             $user = $this->tokenService->getUserFromToken($token);
 
-            \Log::info('auth/me after getToker');
             if (!$user) {
                 return response()->json(['user' => null], 200);
             }
 
             $user->makeHidden(['password', 'remember_token']);
-            \Log::info('auth/me after makehidden');
-
+            
             return response()->json(['user' => $user]);
         } catch (\Throwable $e) {
             return response()->json([

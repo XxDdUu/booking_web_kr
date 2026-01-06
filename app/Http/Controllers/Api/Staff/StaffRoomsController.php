@@ -36,6 +36,7 @@ class StaffRoomsController extends Controller
             'roomName'   => 'required|string|max:128',
             'description'=> 'nullable|string',
             'quantity'    => 'required|numeric|min:1',
+            'capacity'    => 'required|numeric|min:1',
 
             'currentPrice'=> 'required|numeric|min:0',
             

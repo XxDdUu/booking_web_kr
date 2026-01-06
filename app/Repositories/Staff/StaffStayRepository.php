@@ -8,8 +8,4 @@ class StaffStayRepository
     {
         return Stay::create($data);
     }
-    public function getAll(): array
-    {
-        return Stay::all()->toArray();
-    }
 }

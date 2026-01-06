@@ -9,6 +9,6 @@ class RoomRepository
 {
     public function get(string $stayID): Collection
     {
-        return Room::where('stayID', $stayID)->get();
+        return Room::where('stayID', $stayID)->with(relations: 'roomTypeRelation')->get();
     }
 }

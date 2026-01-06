@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Str;
-
+use Storage;
 
 class Room extends Model
 {
@@ -13,7 +13,10 @@ class Room extends Model
     protected $primaryKey = 'RoomID';
     public $incrementing = false;
     protected $keyType = 'string';
-
+    protected $casts = [
+        'image' => 'array',
+        'currentPrice' => 'decimal:2',
+    ];
     protected $fillable = [
         'roomID',
         'stayID',
@@ -21,18 +24,33 @@ class Room extends Model
         'roomName',
         'description',
         'quantity',
+        'capacity',
         'currentPrice',
-        'availability'
+        'availability',
+        'image'
     ];
-
+    protected $appends = [
+        'image_urls',
+        'roomType'
+    ];
+    protected $hidden = ['roomTypeRelation'];
+    
     public function stay()
     {
         return $this->belongsTo(Stay::class, 'stayID', 'stayID');
     }
 
-    public function roomType()
+    public function roomTypeRelation()
     {
-        return $this->belongsTo(RoomType::class, 'roomTypeID', 'roomTypeID');
+        return $this->belongsTo(
+            RoomType::class,
+            'roomTypeID',
+            'roomTypeID'
+        );
+    }
+    public function getRoomTypeAttribute()
+    {
+        return $this->roomTypeRelation?->roomType;
     }
 
     public static function boot()
@@ -53,6 +71,16 @@ class Room extends Model
             random_int(10, 99),
             random_int(1000, 9999)
         );
+    }
+    public function getImageUrlsAttribute(): ?array
+    {
+        return collect($this->image)
+            ->map(fn ($img) =>
+                Str::startsWith($img, ['http://', 'https://'])
+                    ? $img
+                    : Storage::url($img)
+            )
+            ->toArray();
     }
     public function scopeAvailableBetween($query, $checkIn, $checkOut)
     {
