@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Room;
+use Illuminate\Support\Collection;
 
 class RoomRepository
 {
-    public function get(string $stayID): array
+    public function get(string $stayID): Collection
     {
-        return Room::where('stayID', $stayID)->get()->toArray();
+        return Room::where('stayID', $stayID)->get();
     }
 }

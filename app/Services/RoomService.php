@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\RoomRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 class RoomService
 {
@@ -10,7 +11,7 @@ class RoomService
         protected RoomRepository $repo
     ) {}
 
-    public function getRooms(string $stayID): array
+    public function getRooms(string $stayID): Collection
     {
         return $this->repo->get($stayID);
     }

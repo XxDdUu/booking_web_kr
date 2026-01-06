@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
+use App\Http\Controllers\Api\Staff\StaffRoomsController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
 use App\Http\Controllers\Api\Staff\StaffRoomFormController;
 
@@ -80,6 +81,7 @@ Route::prefix('home')->group(function () {
 
 Route::prefix('staff')->group(function () {
     Route::post('/stays', [StaffStaysController::class, 'store']);
+    Route::post('/rooms', [StaffRoomsController::class, 'store']);
     Route::get('/stay-form', [StaffStayFormController::class, 'getFormData']);
     Route::get('/room-form', [StaffRoomFormController::class, 'getFormData']);
 });

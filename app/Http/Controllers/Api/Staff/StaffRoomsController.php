@@ -37,14 +37,12 @@ class StaffRoomsController extends Controller
             'description'=> 'nullable|string',
             'quantity'    => 'required|numeric|min:1',
 
-            'price'      => 'required|numeric|min:0',
-            'rate'       => 'nullable|numeric|min:0|max:5',
+            'currentPrice'=> 'required|numeric|min:0',
             
             'image'      => 'nullable|array',
             'image.*'    => 'nullable|string',
         ]);
         $room = $this->service->createRoom($validated['stayID'], $validated);
-
         return response()->json([
             'ok'   => true,
             'data' => $room
