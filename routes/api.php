@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\Admin\AdminLocationController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\Search\CarSearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
@@ -59,7 +60,10 @@ Route::prefix('stays')->group(function () {
 });
 
 Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
-Route::get('/cars/search', [CarsResultsController::class, 'searchingResults']);
+Route::prefix('/cars')->group(function(){
+    Route::get('/search',[CarSearchController::class,'search']);
+    Route::get('/suggest',[CarSearchController::class,'suggest']);
+});
 
 Route::prefix('admin')->group(function () {
     Route::prefix('locations')->group(function () {

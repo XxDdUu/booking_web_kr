@@ -18,6 +18,11 @@ class CarRental extends Model
         'price',
         'rate',
     ];
+
+    protected $casts = [
+        'price' => 'decimal:2',
+        'rate' => 'decimal:3'
+    ];
     protected static function boot(): void
     {
         parent::boot();
@@ -36,5 +41,19 @@ class CarRental extends Model
             random_int(10, 99),
             random_int(1000, 9999)
         );
+    }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class, 'carID', 'carID');
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'locationID', 'locationID');
+    }
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'serviceID', 'serviceID');
     }
 }

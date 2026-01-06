@@ -21,35 +21,37 @@ class AuthUserController extends Controller
         $this->service = $service;
         $this->tokenService = $tokenService;
     }
-       public function me(Request $request)
+    public function me(Request $request)
     {
         try {
+            \Log::info('auth/me start');
             $header = $request->header('Authorization');
-            if(!$header){
-                return response()->json(['user'=>null],200);
+            if (!$header) {
+                return response()->json(['user' => null], 200);
             }
-
+            \Log::info('auth/me after request headers');
             $token = $this->tokenService->extractToken($header);
-            if(!$token){
-                return response()->json(['token'=>null],200);
+            if (!$token) {
+                return response()->json(['token' => null], 200);
             }
-            
             $user = $this->tokenService->getUserFromToken($token);
 
+            \Log::info('auth/me after getToker');
             if (!$user) {
                 return response()->json(['user' => null], 200);
             }
 
             $user->makeHidden(['password', 'remember_token']);
+            \Log::info('auth/me after makehidden');
 
             return response()->json(['user' => $user]);
         } catch (\Throwable $e) {
             return response()->json([
                 'user' => null,
                 'Error message' => $e->getMessage()
-            ],200);
+            ], 200);
+        }
     }
-}
 
     public function logout(Request $request)
     {
@@ -81,10 +83,10 @@ class AuthUserController extends Controller
         $request->request->remove('contact');
 
         $request->validate([
-        'email' => ['nullable', 'email'],
-        'phone' => ['nullable', 'string'],
-        'password' => ['required', 'string', 'min:8'],
-        'keepLoggedIn' => ['nullable', 'boolean'],
+            'email' => ['nullable', 'email'],
+            'phone' => ['nullable', 'string'],
+            'password' => ['required', 'string', 'min:8'],
+            'keepLoggedIn' => ['nullable', 'boolean'],
         ]);
 
         $data = $this->service->loginUser(
@@ -93,5 +95,4 @@ class AuthUserController extends Controller
         );
         return response()->json($data);
     }
-        
 }
