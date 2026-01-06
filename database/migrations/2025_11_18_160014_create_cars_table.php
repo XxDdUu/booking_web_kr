@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('seatQuantity');
             $table->integer('luggageQuantity');
             $table->string('mileageLimit',255);
-            $table->text('image');
+            $table->json('image');
             $table->timestamps();
         });
     }

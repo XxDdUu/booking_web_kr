@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Storage;
+use Str;
 
 class Car extends Model
 {
@@ -16,6 +18,11 @@ class Car extends Model
         'luggageQuantity',
         'mileageLimit',
         'image',
+    ];
+    protected $appends = ['image_urls'];
+
+    protected $casts = [
+        'image' => 'array',
     ];
 
     protected static function boot(): void
@@ -36,5 +43,21 @@ class Car extends Model
             random_int(10, 99),
             random_int(1000, 9999)
         );
+    }
+    public function getImageUrlsAttribute(): ?array
+    {
+        return collect($this->image)
+            ->map(
+                fn($img) =>
+                Str::startsWith($img, ['http://', 'https://'])
+                    ? $img
+                    : Storage::url($img)
+            )
+            ->toArray();
+    }
+
+    public function carRentals()
+    {
+        $this->hasMany(CarRental::class, 'carID', 'carID');
     }
 }
