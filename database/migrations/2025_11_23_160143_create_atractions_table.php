@@ -16,21 +16,21 @@ return new class extends Migration
 
             $table->string('serviceID', 255)->unique();
             $table->foreign('serviceID')
-                ->references('serviceID')       // Tên cột khóa chính bên bảng hotel_categories
+                ->references('serviceID')
                 ->on('services')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
             $table->string('locationID', 255);
             $table->foreign('locationID')
-                ->references('locationID')       // Tên cột khóa chính bên bảng locations
+                ->references('locationID')  
                 ->on('locations')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
             $table->string('categoryID', 255);
             $table->foreign('categoryID')
-                ->references('categoryID')       // Tên cột khóa chính bên bảng hotel_categories
+                ->references('categoryID')      
                 ->on('categories')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();

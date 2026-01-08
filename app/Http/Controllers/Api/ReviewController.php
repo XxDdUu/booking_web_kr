@@ -46,7 +46,6 @@ class ReviewController extends Controller
     }
     public function destroy(Request $request, string $reviewID)
     {
-        Log::info($reviewID);
         $token = $this->tokenService->extractToken(
             $request->header('Authorization')
         );
