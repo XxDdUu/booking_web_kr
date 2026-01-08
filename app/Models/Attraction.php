@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Storage;
+use Str;
+
 
 class Attraction extends Model
 {
@@ -22,6 +26,15 @@ class Attraction extends Model
         'price',
         'image',
     ];
+
+    protected $casts = [
+        'image' => 'array',
+        'price' => 'decimal:2',
+        'rate' => 'decimal:1'
+    ];
+
+    protected $appends = ['image_urls'];
+
     protected static function boot(): void
     {
         parent::boot();
@@ -40,5 +53,27 @@ class Attraction extends Model
             random_int(10, 99),
             random_int(1000, 9999)
         );
+    }
+
+    public function getImageUrlsAttribute(): ?array
+    {
+        return collect($this->image)
+            ->map(
+                fn($img)
+                => Str::startsWith($img, ['http://', 'https://'])
+                    ? $img
+                    : Storage::url($img)
+            )->toArray();
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class,'categoryID','categoryID');
+    }
+    public function location(){
+        return $this->belongsTo(Location::class, 'locationID','locationID');
+    }
+
+    public function service(){
+        return $this->belongsTo(Service::class,'serviceID','serviceID');
     }
 }

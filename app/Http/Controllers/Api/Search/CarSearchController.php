@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Search;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CarSuggestResource;
+use App\Http\Resources\Car\CarSuggestResource;
 use App\Services\Search\CarSearchService;
 use Illuminate\Http\Request;
 

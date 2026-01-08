@@ -13,7 +13,7 @@ class Category extends Model
     protected $fillable = [
         'categoryName',
     ];
-     protected static function boot(): void
+    protected static function boot(): void
     {
         parent::boot();
         static::creating(function ($category) {
@@ -39,5 +39,10 @@ class Category extends Model
             'categoryID',
             'categoryID'
         );
+    }
+
+    public function attractions()
+    {
+        return $this->hasMany(Attraction::class, 'categoryID', 'categoryID');
     }
 }
