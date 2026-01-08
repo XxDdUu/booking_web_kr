@@ -61,6 +61,7 @@ Route::prefix('stays')->group(function () {
     Route::delete( '{id}', [StaysController::class, 'destroy']);
 
     Route::get('/{id}/rooms', [RoomController::class, 'index']);
+    Route::get('/{id}/rooms/available', [RoomController::class, 'available']);
 });
 
 Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);

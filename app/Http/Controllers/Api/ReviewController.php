@@ -7,7 +7,7 @@ use App\Services\ReviewService;
 use App\Services\TokenService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use Log;
 class ReviewController extends Controller
 {
     public function __construct(
@@ -46,6 +46,7 @@ class ReviewController extends Controller
     }
     public function destroy(Request $request, string $reviewID)
     {
+        Log::info($reviewID);
         $token = $this->tokenService->extractToken(
             $request->header('Authorization')
         );

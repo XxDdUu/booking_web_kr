@@ -15,4 +15,8 @@ class RoomService
     {
         return $this->repo->get($stayID);
     }
+    public function getAvailableRooms(string $stayID, string $checkIn, string $checkOut): Collection
+    {
+        return $this->repo->get($stayID, $checkIn, $checkOut);
+    }
 }

@@ -13,7 +13,7 @@ class ReviewRepository
     public function getAverageRatingByService(string $serviceID): ?float
     {
         return Review::where('serviceID', $serviceID)
-            ->avg('rating');
+            ->avg('rating') ?? 0.0;
     }
     public function delete(string $reviewID, string $userID) {
         $review = Review::where('reviewID', $reviewID)

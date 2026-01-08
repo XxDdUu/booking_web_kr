@@ -33,8 +33,14 @@ return new class extends Migration
 
             // ENUM cho loại dịch vụ
             // $table->enum('serviceType', ['stay', 'car', 'attraction']);
-            $table->string('serviceType', 50);
 
+
+            $table->string('serviceType', 50);
+            $table->string('stayID')->nullable();
+            $table->string('carID')->nullable();
+            $table->string('attractionID')->nullable();
+            
+            $table->string('roomTypeID')->nullable();
             $table->integer('quantity')->default(1);
 
             $table->decimal('subtotal', 20, 2)->nullable();

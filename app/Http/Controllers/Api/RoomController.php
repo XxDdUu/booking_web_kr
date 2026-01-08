@@ -17,5 +17,12 @@ class RoomController extends Controller
     {
         $rooms = $this->service->getRooms($stayID);
         return RoomResource::collection($rooms);
+    }   
+    public function available(Request $request, string $stayID) {
+        $checkIn = $request->input('check_in');
+        $checkOut = $request->input('check_out');
+        $availableRooms = $this->service->getAvailableRooms($stayID, $checkIn, $checkOut);
+        return RoomResource::collection($availableRooms);
     }
+
 }

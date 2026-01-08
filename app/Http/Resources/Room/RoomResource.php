@@ -23,6 +23,7 @@ class RoomResource extends JsonResource
             'image_urls'   => $this->image_urls,
             'created_at'   => $this->created_at,
             'updated_at'   => $this->updated_at,
+            'availableQuantity' => $this->availableQuantity,
         ];
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Str;
 use Storage;
-
+use Illuminate\Database\Eloquent\Builder;
 class Room extends Model
 {
     protected $table = 'rooms';
@@ -82,21 +82,23 @@ class Room extends Model
             )
             ->toArray();
     }
-    public function scopeAvailableBetween($query, $checkIn, $checkOut)
-    {
-        return $query
-            ->leftJoin('booking_items', function ($join) use ($checkIn, $checkOut) {
-                $join->on('rooms.roomID', '=', 'booking_items.serviceID')
-                    ->where('booking_items.serviceType', 'ROOM')
-                    ->where('booking_items.check_in', '<', $checkOut)
-                    ->where('booking_items.check_out', '>', $checkIn);
-            })
-            ->select(
-                'rooms.*',
-                DB::raw('rooms.quantity - COALESCE(SUM(booking_items.quantity), 0) as available_rooms')
-            )
-            ->groupBy('rooms.roomID')
-            ->having('available_rooms', '>', 0);
+   public function scopeWithAvailabilityBetween(
+        Builder $query,
+        string $stayID,
+        string $checkIn,
+        string $checkOut
+    ) {
+        return $query->where('stayID', $stayID)
+            ->select('rooms.*')
+            ->selectRaw('(rooms.quantity - COALESCE((
+                SELECT SUM(bi.quantity)
+                FROM bookingItems bi
+                WHERE bi.stayID = rooms.stayID
+                AND bi.roomTypeID = rooms.roomTypeID
+                AND bi.check_in < ?
+                AND bi.check_out > ?
+            ), 0)) as availableQuantity', [$checkOut, $checkIn]);
     }
+
 
 }
