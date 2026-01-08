@@ -16,13 +16,14 @@ use App\Http\Controllers\Api\Admin\AdminLocationController;
 use App\Http\Controllers\Api\Admin\AdminUserController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\Search\AttractionSearchController;
 use App\Http\Controllers\Api\Search\CarSearchController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Staff\StaffStaysController;
 use App\Http\Controllers\Api\Staff\StaffRoomsController;
 use App\Http\Controllers\Api\Staff\StaffStayFormController;
 use App\Http\Controllers\Api\Staff\StaffRoomFormController;
-
+use App\Http\Controllers\AttractionController;
 
 Route::prefix('auth')->group(function () {
     Route::post('/check-email', [AuthCheckController::class, 'checkEmail']);
@@ -64,7 +65,11 @@ Route::prefix('stays')->group(function () {
     Route::get('/{id}/rooms/available', [RoomController::class, 'available']);
 });
 
-Route::get('/attractions/search', [AttractionsResultsController::class, 'searchingResults']);
+Route::prefix('/attractions')->group(function(){
+    Route::get('/search',[AttractionSearchController::class,'search']);
+    Route::get('/suggest',[AttractionSearchController::class,'suggest']);
+});
+
 Route::prefix('/cars')->group(function(){
     Route::get('/search',[CarSearchController::class,'search']);
     Route::get('/suggest',[CarSearchController::class,'suggest']);

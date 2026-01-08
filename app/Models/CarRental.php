@@ -21,7 +21,7 @@ class CarRental extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
-        'rate' => 'decimal:3'
+        'rate' => 'decimal:1'
     ];
     protected static function boot(): void
     {

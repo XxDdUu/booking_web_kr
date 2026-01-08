@@ -24,7 +24,6 @@ class CarSearchService
 
             $cars->whereHas('carRentals', function ($carRentalQuery) use ($checkin, $checkout) {
                 $carRentalQuery->availableBetween($checkin, $checkout);
-                Log::info('Get car rentals', $carRentalQuery->all());
             });
         }
 
